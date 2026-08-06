@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko AZARIYA - Sepatu Premium</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header Utama -->
+    <header>
+        <h1>AZARIYA</h1>
+        <p style="font-size: 0.75rem; opacity: 0.8;">Koleksi Sepatu Premium & Terpercaya</p>
+        <button id="admin-top-logout" style="display:none; position: absolute; right: 15px; top: 15px; background: #e63946; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; cursor: pointer;" onclick="adminLogout()">
+            <i class="fas fa-sign-out-alt"></i> Logout Admin
+        </button>
+    </header>
+
+    <!-- 1. Role Selection -->
+    <div id="role-selection-screen" class="auth-overlay active">
+        <div class="auth-card" style="max-width: 380px; padding: 35px 25px;">
+            <i class="fas fa-store" style="font-size: 3.5rem; color: var(--primary-green); margin-bottom: 15px;"></i>
+            <h2>Toko AZARIYA</h2>
+            <p>Silakan pilih akses masuk aplikasi:</p>
+            <button class="btn-auth" style="margin: 15px 0 10px 0; font-size: 1rem; padding: 14px;" onclick="chooseRole('buyer')">
+                <i class="fas fa-shopping-bag"></i> Masuk sebagai Pembeli
+            </button>
+            <button class="btn-auth" style="margin: 5px 0 0 0; font-size: 1rem; padding: 14px; background: linear-gradient(135deg, #34495e, #2c3e50);" onclick="chooseRole('admin')">
+                <i class="fas fa-user-shield"></i> Masuk sebagai Admin
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. Admin Login -->
+    <div id="admin-login-screen" class="auth-overlay">
+        <div class="auth-card">
+            <i class="fas fa-lock" style="font-size: 2.5rem; color: var(--primary-green); margin-bottom: 10px;"></i>
+            <h2>Login Admin</h2>
+            <p>Masukkan kata sandi khusus administrator</p>
+            <form onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label for="admin-username">Nama Pengguna (Username)</label>
+                    <input type="text" id="admin-username" class="form-input" placeholder="Masukkan username admin" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Kata Sandi (Password)</label>
+                    <input type="password" id="admin-password" class="form-input" placeholder="••••••••" required>
+                </div>
+                <p id="admin-login-error" style="color: #e63946; font-size: 0.8rem; display: none; margin-bottom: 10px;">
+                    Username atau Kata Sandi salah!
+                </p>
+                <button type="submit" class="btn-auth">Masuk Admin <i class="fas fa-sign-in-alt"></i></button>
+                <button type="button" class="btn-auth" style="background-color: var(--accent-green); margin-top: 8px;" onclick="backToRoleSelection()">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. Auth Step 1 (Email) -->
+    <div id="auth-step-1" class="auth-overlay">
+        <div class="auth-card">
+            <h2>Masuk ke AZARIYA</h2>
+            <p>Masukkan email aktif kamu untuk melanjutkan</p>
+            <form onsubmit="handleAuthStep1(event)">
+                <div class="form-group">
+                    <label for="input-email">Alamat Email</label>
+                    <input type="email" id="input-email" class="form-input" placeholder="contoh: azariya@email.com" required>
+                </div>
+                <button type="submit" class="btn-auth">Lanjut <i class="fas fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. Auth Step 2 (Username & Password) -->
+    <div id="auth-step-2" class="auth-overlay">
+        <div class="auth-card">
+            <h2>Lengkapi Profil</h2>
+            <p>Masukkan nama pengguna dan kata sandi kamu</p>
+            <form onsubmit="handleAuthStep2(event)">
+                <div class="form-group">
+                    <label for="input-username">Nama Pengguna (Username)</label>
+                    <input type="text" id="input-username" class="form-input" placeholder="Masukkan nama kamu" required>
+                </div>
+                <div class="form-group">
+                    <label for="input-password">Kata Sandi</label>
+                    <input type="password" id="input-password" class="form-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-auth">Lanjut <i class="fas fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 5. Auth Step 3 (Phone & Address) -->
+    <div id="auth-step-3" class="auth-overlay">
+        <div class="auth-card">
+            <h2>Kontak & Alamat</h2>
+            <p>Masukkan nomor telepon dan alamat pengiriman kamu</p>
+            <form onsubmit="handleAuthStep3(event)">
+                <div class="form-group">
+                    <label for="input-phone">Nomor Telepon</label>
+                    <input type="tel" id="input-phone" class="form-input" placeholder="contoh: +62 812-3456-7890" required>
+                </div>
+                <div class="form-group">
+                    <label for="input-address">Alamat Pengiriman Utama</label>
+                    <textarea id="input-address" class="form-input" rows="3" placeholder="Jl. Cempaka Indah No. 45..." style="resize: vertical; font-family: inherit;" required></textarea>
+                </div>
+                <button type="submit" class="btn-auth">Masuk / Daftar <i class="fas fa-check"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 6. Welcome Screen -->
+    <div id="auth-step-welcome" class="auth-overlay">
+        <div class="auth-card" style="padding: 40px 20px;">
+            <i class="fas fa-check-circle" style="font-size: 3.5rem; color: var(--primary-green); margin-bottom: 15px;"></i>
+            <h2 id="welcome-user-name" style="font-size: 1.6rem; color: var(--dark-green); margin-bottom: 10px;">Selamat datang!</h2>
+            <p style="margin-bottom: 25px;">Nikmati pengalaman belanja sepatu premium terbaik pilihanmu.</p>
+            <button class="btn-auth" onclick="startApp()">Masuk ke Beranda <i class="fas fa-shopping-bag"></i></button>
+        </div>
+    </div>
+
+    <!-- 7. Admin Main Menu -->
+    <div id="admin-main-menu" class="page-view">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 65vh; text-align: center;">
+            <p style="font-size: 1.2rem; color: var(--dark-green); font-weight: 700; margin-bottom: 25px;">Silakan pilih salah satu menu</p>
+            <button class="btn-auth" style="max-width: 300px; padding: 14px; margin-bottom: 15px;" onclick="openAdminDashboard()"><i class="fas fa-tachometer-alt"></i> Dashboard</button>
+            <button class="btn-auth" style="max-width: 300px; padding: 14px; background-color: var(--accent-green);" onclick="openAdminReports()"><i class="fas fa-file-invoice-dollar"></i> Laporan</button>
+        </div>
+    </div>
+
+    <!-- 8. Admin Dashboard -->
+    <div id="admin-dashboard-view" class="page-view">
+        <div style="display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto 15px auto;">
+            <button class="btn" style="background:#ddd;" onclick="openAdminMainMenu()"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+            <span style="font-size: 0.9rem; font-weight: bold; color: var(--dark-green);">Dashboard Admin</span>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;">
+            <button class="btn" id="btn-tab-input" style="background:var(--dark-green); color:#fff; padding:10px 15px;" onclick="switchAdminDashTab('input')"><i class="fas fa-plus-circle"></i> Input Barang</button>
+            <button class="btn" id="btn-tab-view" style="background:var(--accent-green); color:#fff; padding:10px 15px;" onclick="switchAdminDashTab('view')"><i class="fas fa-boxes"></i> View Produk</button>
+        </div>
+        <div id="admin-sub-input" style="background:#fff; padding:20px; border-radius:12px; max-width:600px; margin:0 auto; border:1px solid var(--light-green);">
+            <h3 style="color: var(--dark-green); margin-bottom: 15px; font-size: 1.1rem; text-align: center;">Form Input Barang Baru</h3>
+            <form onsubmit="handleAdminAddProduct(event)">
+                <div class="form-group">
+                    <label>Upload Foto Produk:</label>
+                    <input type="file" id="admin-prod-file" accept="image/*" class="form-input" onchange="previewUploadImage(event)" required>
+                    <div id="preview-container" style="margin-top:10px; text-align:center; border: 2px dashed #ddd; padding:10px; border-radius:8px;">
+                        <span style="color: var(--text-muted); font-size: 0.75rem;" id="preview-text">Pratinjau foto akan muncul di sini</span>
+                        <img id="preview-img" src="" alt="Pratinjau" style="display: none; max-height: 150px; margin: 0 auto;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="admin-prod-name">Nama Produk Sepatu:</label>
+                    <input type="text" id="admin-prod-name" class="form-input" placeholder="contoh: Nike Air Jordan" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-prod-price">Harga Produk (Rp):</label>
+                    <input type="number" id="admin-prod-price" class="form-input" placeholder="2500000" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-prod-desc">Deskripsi Produk:</label>
+                    <textarea id="admin-prod-desc" class="form-input" rows="3" placeholder="Deskripsi..." required></textarea>
+                </div>
+                <button type="submit" class="btn-auth">Tambahkan Barang</button>
+            </form>
+        </div>
+        <div id="admin-sub-view" style="display: none; background:#fff; padding:20px; border-radius:12px; max-width:800px; margin:0 auto; border:1px solid var(--light-green);">
+            <h3 style="color: var(--dark-green); margin-bottom: 15px; font-size: 1.1rem; text-align: center;">Daftar Produk Toko</h3>
+            <div style="overflow-x: auto;">
+                <table style="width:100%; border-collapse: collapse; font-size: 0.85rem;">
+                    <thead>
+                        <tr style="background:var(--light-green); text-align:left;">
+                            <th style="padding:8px;">Foto</th>
+                            <th style="padding:8px;">Nama</th>
+                            <th style="padding:8px;">Harga</th>
+                            <th style="padding:8px;">Terjual</th>
+                            <th style="padding:8px;">Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-product-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. Admin Reports -->
+    <div id="admin-reports-view" class="page-view">
+        <div style="display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto 15px auto;">
+            <button class="btn" style="background:#ddd;" onclick="openAdminMainMenu()"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+            <span style="font-size: 0.9rem; font-weight: bold; color: var(--dark-green);">Laporan Penjualan</span>
+        </div>
+        <div style="max-width: 600px; margin: 0 auto; background:#fff; padding:20px; border-radius:12px; border:1px solid var(--light-green);">
+            <div style="display:flex; gap:10px; margin-bottom:15px;">
+                <button class="btn" style="flex:1; background:var(--dark-green); color:#fff;" onclick="showReportType('harian')">Harian</button>
+                <button class="btn" style="flex:1; background:var(--accent-green); color:#fff;" onclick="showReportType('bulanan')">Bulanan</button>
+                <button class="btn" style="flex:1; background:var(--primary-green); color:#fff;" onclick="showReportType('tahunan')">Tahunan</button>
+            </div>
+            <h4 id="report-title" style="color: var(--dark-green); text-align: center; margin-bottom: 10px;">Laporan Harian</h4>
+            <div style="overflow-x: auto;">
+                <table style="width:100%; border-collapse: collapse; font-size: 0.85rem;">
+                    <thead>
+                        <tr style="background:var(--light-green); text-align:left;">
+                            <th style="padding:8px;">Periode</th>
+                            <th style="padding:8px;">Transaksi</th>
+                            <th style="padding:8px;">Pendapatan</th>
+                        </tr>
+                    </thead>
+                    <tbody id="report-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 10. Buyer Home View -->
+    <div id="view-home" class="page-view active">
+        <div class="section-title"><i class="fas fa-fire"></i> Produk Bestseller</div>
+        <div class="bestseller-scroll" id="bestseller-grid"></div>
+        <div class="section-title"><i class="fas fa-shoe-prints"></i> Koleksi Pilihan</div>
+        <div class="product-grid" id="regular-grid"></div>
+    </div>
+
+    <!-- 11. Product Detail View -->
+    <div id="view-product-detail" class="page-view">
+        <button class="btn" style="background:#ddd; margin-bottom:10px;" onclick="switchTab('home')"><i class="fas fa-arrow-left"></i> Kembali</button>
+        <div id="detail-card-content" style="background:#fff; padding:20px; border-radius:12px; max-width:600px; margin:0 auto; border:1px solid var(--light-green);"></div>
+    </div>
+
+    <!-- 12. Cart View -->
+    <div id="view-cart" class="page-view">
+        <div class="section-title"><i class="fas fa-shopping-bag"></i> Keranjang Saya</div>
+        <div id="cart-items-container" style="max-width: 800px; margin: 0 auto;"></div>
+        <div class="cart-footer" style="position:fixed; bottom:60px; left:0; right:0; background:#fff; padding:10px 20px; border-top:1px solid #ddd; display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto;">
+            <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Total (Inc. Ongkir Rp 5.000):</span>
+                <div id="cart-total-price" style="font-size: 0.95rem; font-weight: bold; color: var(--dark-green);">Rp 0</div>
+            </div>
+            <button class="btn btn-buy" style="padding: 10px 16px;" onclick="goToCheckoutFromCart()">Lanjut Bayar</button>
+        </div>
+    </div>
+
+    <!-- 13. Checkout View -->
+    <div id="view-checkout" class="page-view">
+        <div class="section-title" style="justify-content: center;"><i class="fas fa-file-invoice"></i> Konfirmasi Pesanan</div>
+        <div style="background:#fff; padding:15px; border-radius:12px; max-width:600px; margin:0 auto 10px auto; border:1px solid var(--light-green);">
+            <strong>Alamat Pengiriman:</strong>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">
+                <strong id="checkout-display-name">Azariya</strong> (<span id="checkout-display-phone">+62...</span>)<br>
+                <span id="checkout-display-address">Alamat...</span>
+            </p>
+        </div>
+        <div style="background:#fff; padding:15px; border-radius:12px; max-width:600px; margin:0 auto 10px auto; border:1px solid var(--light-green);">
+            <strong>Metode Pembayaran:</strong>
+            <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+                <i class="fas fa-hand-holding-usd" style="font-size: 1.4rem;"></i>
+                <div>
+                    <div>Bayar di Tempat (COD)</div>
+                    <small style="color: #444; font-size:0.75rem;">Bayar tunai saat sepatu sampai</small>
+                </div>
+            </div>
+        </div>
+        <div style="background:#fff; padding:15px; border-radius:12px; max-width:600px; margin:0 auto 15px auto; border:1px solid var(--light-green);">
+            <strong>Ringkasan Produk:</strong>
+            <div id="checkout-summary-items" style="margin-top: 10px;"></div>
+            <hr style="margin: 10px 0; border: none; border-top: 1px dashed #ccc;">
+            <div style="display: flex; justify-content: space-between; font-weight: bold;">
+                <span>Total Tagihan:</span>
+                <span id="checkout-total-price" style="color: var(--dark-green);">Rp 0</span>
+            </div>
+        </div>
+        <div style="max-width:600px; margin:0 auto;">
+            <button class="btn btn-buy" style="width: 100%; padding: 12px; font-size: 0.9rem;" onclick="processCheckout()">
+                <i class="fas fa-check-circle"></i> Klik Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- 14. Thankyou View -->
+    <div id="view-thankyou" class="page-view">
+        <div style="text-align:center; padding: 50px 20px; max-width:500px; margin:0 auto;">
+            <i class="fas fa-heart" style="font-size:3rem; color:var(--primary-green); margin-bottom:15px;"></i>
+            <h2 style="color: var(--dark-green); margin-bottom: 10px;">Terima kasih telah berbelanja</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Pesananmu dengan metode <strong>COD</strong> sedang diproses.</p>
+            <button class="btn btn-buy" style="margin: 0 auto; padding: 10px 20px;" onclick="switchTab('orders')">Lihat Status Pesanan</button>
+        </div>
+    </div>
+
+    <!-- 15. Orders View -->
+    <div id="view-orders" class="page-view">
+        <div class="section-title"><i class="fas fa-truck"></i> Status Pesanan</div>
+        <div id="orders-container" style="max-width:800px; margin:0 auto;"></div>
+    </div>
+
+    <!-- 16. Profile View -->
+    <div id="view-profile" class="page-view">
+        <div class="section-title" style="justify-content: center;"><i class="fas fa-user-circle"></i> Profil Saya</div>
+        <div style="background:#fff; border-radius:12px; max-width:500px; margin:0 auto; padding:20px; border:1px solid var(--light-green); text-align:center;">
+            <h3 style="color: var(--dark-green); margin-bottom: 5px;" id="profile-display-name">Azariya</h3>
+            <span style="background:var(--light-green); color:var(--dark-green); padding:3px 8px; font-size:0.75rem; border-radius:10px;">VIP Member</span>
+            <div style="text-align:left; margin-top:20px; font-size:0.85rem;">
+                <p style="margin-bottom:8px;"><strong>Email:</strong> <span id="profile-display-email" style="color:var(--text-muted);">...</span></p>
+                <p style="margin-bottom:8px;"><strong>Telepon:</strong> <span id="profile-display-phone" style="color:var(--text-muted);">...</span></p>
+                <p style="margin-bottom:15px;"><strong>Alamat:</strong> <span id="profile-display-address" style="color:var(--text-muted);">...</span></p>
+            </div>
+            <button class="btn" style="background:#e63946; color:#fff; width:100%; padding:10px;" onclick="showLogoutModal()"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Pembeli -->
+    <nav class="bottom-nav" id="buyer-bottom-nav" style="display: none;">
+        <button class="nav-item active" id="nav-home" onclick="switchTab('home')">
+            <i class="fas fa-home"></i> Beranda
+        </button>
+        <button class="nav-item" id="nav-cart" onclick="switchTab('cart')">
+            <i class="fas fa-shopping-cart"></i> Keranjang <span id="cart-badge" style="display:none; background:#e63946; color:#fff; font-size:0.6rem; padding:2px 5px; border-radius:50%;"></span>
+        </button>
+        <button class="nav-item" id="nav-orders" onclick="switchTab('orders')">
+            <i class="fas fa-box"></i> Pesanan
+        </button>
+        <button class="nav-item" id="nav-profile" onclick="switchTab('profile')">
+            <i class="fas fa-user"></i> Profil
+        </button>
+    </nav>
+
+    <!-- Modal Konfirmasi Logout Pembeli -->
+    <div id="logout-modal" class="auth-overlay">
+        <div class="auth-card" style="max-width: 320px;">
+            <h3>Konfirmasi Keluar</h3>
+            <p>Apakah kamu yakin ingin keluar dari akun ini?</p>
+            <div style="display:flex; gap:10px; margin-top:15px;">
+                <button class="btn" style="flex:1; background:#ddd;" onclick="closeLogoutModal()">Batal</button>
+                <button class="btn" style="flex:1; background:#e63946; color:#fff;" onclick="confirmLogout()">Keluar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Logout Admin -->
+    <div id="admin-logout-modal" class="auth-overlay">
+        <div class="auth-card" style="max-width: 320px;">
+            <h3>Keluar Admin</h3>
+            <p>Yakin ingin keluar dari panel admin?</p>
+            <div style="display:flex; gap:10px; margin-top:15px;">
+                <button class="btn" style="flex:1; background:#ddd;" onclick="closeAdminLogoutModal()">Batal</button>
+                <button class="btn" style="flex:1; background:#e63946; color:#fff;" onclick="confirmAdminLogout()">Keluar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
