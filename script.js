@@ -1,4 +1,4 @@
-const SHIPPING_FEE = 5000;
+ const SHIPPING_FEE = 5000;
 
 let userProfile = {
     email: "azariya.azariya@email.com",
