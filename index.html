@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko AZARIYA - Premium Gadget Store</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #5a7862;
+            --dark-green: #2d3e32;
+            --light-green: #eaf0ec;
+            --accent-green: #8cae96;
+            --bg-color: #f7f9f7;
+            --card-bg: #ffffff;
+            --text-dark: #1a241c;
+            --text-muted: #6b7c70;
+            --danger-red: #e63946;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            padding-bottom: 75px;
+            width: 100%;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* HEADER UTAMA */
+        header {
+            background: linear-gradient(135deg, var(--dark-green), var(--primary-green));
+            color: #fff;
+            padding: 15px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin: 0 auto;
+        }
+
+        .btn-header-logout {
+            background-color: var(--danger-red);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* CONTAINER VIEWS */
+        .page-view {
+            display: none;
+            padding: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .page-view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* AUTH OVERLAYS & ROLES */
+        .auth-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--bg-color);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .auth-overlay.active {
+            display: flex;
+        }
+
+        .auth-card {
+            background: #ffffff;
+            border: 1px solid var(--light-green);
+            padding: 35px 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .auth-card .store-icon {
+            font-size: 3.5rem;
+            color: var(--primary-green);
+            margin-bottom: 10px;
+        }
+
+        .auth-card h2 {
+            color: var(--dark-green);
+            margin-bottom: 8px;
+            font-size: 1.6rem;
+        }
+
+        .auth-card p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 25px;
+        }
+
+        .btn-role {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-role-pembeli {
+            background-color: var(--primary-green);
+            color: white;
+        }
+
+        .btn-role-admin {
+            background-color: #2b4251;
+            color: white;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--dark-green);
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(90, 120, 98, 0.15);
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--dark-green);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-secondary {
+            background-color: var(--accent-green);
+            color: white;
+        }
+
+        /* SECTION TITLES */
+        .section-title {
+            font-size: 1.2rem;
+            margin: 15px 0 10px;
+            color: var(--dark-green);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* PRODUCT GRID & CARDS */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .bestseller-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            scroll-snap-type: x mandatory;
+        }
+
+        .bestseller-scroll::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .bestseller-scroll::-webkit-scrollbar-thumb {
+            background: var(--accent-green);
+            border-radius: 4px;
+        }
+
+        .bestseller-scroll .product-card {
+            min-width: 170px;
+            max-width: 170px;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+            border: 1px solid var(--light-green);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .badge-bestseller {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background-color: var(--primary-green);
+            color: #fff;
+            padding: 3px 8px;
+            font-size: 0.65rem;
+            font-weight: bold;
+            border-radius: 12px;
+            z-index: 5;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+
+        .product-info {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .product-price {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 6px;
+        }
+
+        .product-description {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-meta {
+            font-size: 0.72rem;
+            color: #f39c12;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .product-meta span {
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 5px;
+            margin-top: auto;
+        }
+
+        .btn {
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .btn-cart {
+            background-color: var(--light-green);
+            color: var(--dark-green);
+            flex: 1;
+        }
+
+        .btn-buy {
+            background-color: var(--dark-green);
+            color: #fff;
+            flex: 1;
+        }
+
+        /* DETAIL PRODUK VIEW */
+        .btn-back-nav {
+            background: none;
+            border: none;
+            color: var(--dark-green);
+            font-size: 0.95rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .detail-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid var(--light-green);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .detail-img-box {
+            width: 100%;
+            height: 260px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f0f0f0;
+            margin-bottom: 15px;
+        }
+
+        .detail-img-box img, .detail-img-box video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* BOTTOM SHEET / MODAL ADD TO CART (GAMBAR 6) */
+        .cart-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            z-index: 3000;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .cart-modal-overlay.active {
+            display: flex;
+        }
+
+        .cart-modal-content {
+            background: #fff;
+            width: 100%;
+            max-width: 500px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 20px;
+            animation: slideUp 0.3s ease-out;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .cart-modal-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .cart-modal-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+        }
+
+        .cart-modal-price {
+            color: var(--danger-red);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .cart-modal-flash {
+            color: var(--danger-red);
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .cart-modal-stok {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: -5px;
+            right: 0;
+            font-size: 1.2rem;
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+        }
+
+        .option-group {
+            margin-bottom: 15px;
+        }
+
+        .option-label {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--dark-green);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .option-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .opt-btn {
+            padding: 6px 14px;
+            border: 1px solid #ccc;
+            background: #fff;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .opt-btn.active {
+            border-color: var(--primary-green);
+            background-color: var(--light-green);
+            color: var(--dark-green);
+            font-weight: bold;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: fit-content;
+        }
+
+        .qty-btn {
+            border: none;
+            background: #f0f0f0;
+            padding: 6px 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .qty-input {
+            width: 40px;
+            text-align: center;
+            border: none;
+            font-weight: bold;
+        }
+
+        .btn-confirm-cart {
+            width: 100%;
+            background-color: var(--danger-red);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        /* ADMIN PAGES (GAMBAR 3, 4, 5) */
+        .admin-nav-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin: 40px auto 0;
+        }
+
+        .btn-admin-menu {
+            padding: 14px;
+            background: var(--dark-green);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .admin-table-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            text-align: left;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .admin-table th {
+            background-color: var(--light-green);
+            color: var(--dark-green);
+        }
+
+        .admin-table img {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .report-summary-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        /* CART PAGE */
+        .cart-item {
+            background: #fff;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            border: 1px solid var(--light-green);
+        }
+
+        .cart-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-green);
+            cursor: pointer;
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .cart-item-price {
+            font-size: 0.85rem;
+            color: var(--dark-green);
+            font-weight: bold;
+        }
+
+        .cart-footer {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1200px;
+            background: #fff;
+            padding: 10px 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            border-top: 1px solid var(--light-green);
+            box-sizing: border-box;
+            z-index: 99;
+        }
+
+        /* BOTTOM NAVBAR */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1200px;
+            background-color: var(--dark-green);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.75rem;
+            gap: 4px;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .nav-item.active {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .badge-count {
+            position: absolute;
+            top: -4px;
+            right: -6px;
+            background: var(--danger-red);
+            color: white;
+            font-size: 0.6rem;
+            padding: 2px 5px;
+            border-radius: 10px;
+        }
+
+        /* RESPONSIVE LAYOUT */
+        @media (min-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 16px;
+            }
+
+            .bestseller-scroll .product-card {
+                min-width: 220px;
+                max-width: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GAMBAR 1: HALAMAN PILIH AKSES UTAMA -->
+    <div id="auth-role-selection" class="auth-overlay active">
+        <div class="auth-card">
+            <i class="fas fa-store store-icon"></i>
+            <h2>Toko AZARIYA</h2>
+            <p>Silakan pilih akses masuk aplikasi:</p>
+            <button class="btn-role btn-role-pembeli" onclick="selectRole('pembeli')">
+                <i class="fas fa-shopping-bag"></i> Masuk sebagai Pembeli
+            </button>
+            <button class="btn-role btn-role-admin" onclick="selectRole('admin')">
+                <i class="fas fa-user-shield"></i> Masuk sebagai Admin
+            </button>
+        </div>
+    </div>
+
+    <!-- GAMBAR 2: FORM LOGIN ADMIN KHUSUS -->
+    <div id="auth-admin-login" class="auth-overlay">
+        <div class="auth-card">
+            <i class="fas fa-lock" style="font-size: 3rem; color: var(--primary-green); margin-bottom: 12px;"></i>
+            <h2>Login Admin</h2>
+            <p>Masukkan kata sandi khusus administrator</p>
+            <form onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label>Nama Pengguna (Username)</label>
+                    <input type="text" id="admin-username" class="form-input" placeholder="Masukkan username admin" required>
+                </div>
+                <div class="form-group">
+                    <label>Kata Sandi (Password)</label>
+                    <input type="password" id="admin-password" class="form-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-auth">Masuk Admin <i class="fas fa-sign-in-alt"></i></button>
+                <button type="button" class="btn-auth btn-secondary" onclick="backToRoleSelection()"><i class="fas fa-arrow-left"></i> Kembali</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PEMBELI STEP 1: EMAIL -->
+    <div id="auth-step-1" class="auth-overlay">
+        <div class="auth-card">
+            <h2>Masuk Pembeli</h2>
+            <p>Masukkan email aktif kamu untuk melanjutkan</p>
+            <form onsubmit="handleAuthStep1(event)">
+                <div class="form-group">
+                    <label for="input-email">Alamat Email</label>
+                    <input type="email" id="input-email" class="form-input" placeholder="contoh: azariya@email.com" required>
+                </div>
+                <button type="submit" class="btn-auth">Lanjut <i class="fas fa-arrow-right"></i></button>
+                <button type="button" class="btn-auth btn-secondary" onclick="backToRoleSelection()"><i class="fas fa-arrow-left"></i> Kembali</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PEMBELI STEP 2: USERNAME & PASSWORD -->
+    <div id="auth-step-2" class="auth-overlay">
+        <div class="auth-card">
+            <h2>Lengkapi Profil</h2>
+            <p>Masukkan nama pengguna dan kata sandi kamu</p>
+            <form onsubmit="handleAuthStep2(event)">
+                <div class="form-group">
+                    <label for="input-username">Nama Pengguna (Username)</label>
+                    <input type="text" id="input-username" class="form-input" placeholder="Masukkan nama kamu" required>
+                </div>
+                <div class="form-group">
+                    <label for="input-password">Kata Sandi</label>
+                    <input type="password" id="input-password" class="form-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-auth">Lanjut <i class="fas fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PEMBELI STEP 3: PHONE & ADDRESS -->
+    <div id="auth-step-3" class="auth-overlay">
+        <div class="auth-card">
+            <h2>Kontak & Alamat</h2>
+            <p>Masukkan nomor telepon dan alamat pengiriman kamu</p>
+            <form onsubmit="handleAuthStep3(event)">
+                <div class="form-group">
+                    <label for="input-phone">Nomor Telepon</label>
+                    <input type="tel" id="input-phone" class="form-input" placeholder="contoh: +62 812-3456-7890" required>
+                </div>
+                <div class="form-group">
+                    <label for="input-address">Alamat Pengiriman Utama</label>
+                    <textarea id="input-address" class="form-input" rows="3" placeholder="Jl. Cempaka Indah No. 45..." style="resize: vertical;" required></textarea>
+                </div>
+                <button type="submit" class="btn-auth">Masuk / Daftar <i class="fas fa-check"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- WELCOME SCREEN -->
+    <div id="auth-step-welcome" class="auth-overlay">
+        <div class="auth-card" style="padding: 40px 20px;">
+            <i class="fas fa-check-circle" style="font-size: 3.5rem; color: var(--primary-green); margin-bottom: 15px;"></i>
+            <h2 id="welcome-user-name" style="font-size: 1.5rem; color: var(--dark-green); margin-bottom: 10px;">Selamat datang!</h2>
+            <p style="margin-bottom: 25px;">Nikmati pengalaman belanja Gadget pilihan terbaik.</p>
+            <button class="btn-auth" onclick="startApp()">Masuk ke Beranda <i class="fas fa-shopping-bag"></i></button>
+        </div>
+    </div>
+
+    <!-- HEADER TOKO -->
+    <header>
+        <h1 id="header-title">AZARIYA</h1>
+        <button class="btn-header-logout" id="btn-top-logout" onclick="logoutApp()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </header>
+
+    <!-- ================= HALAMAN PEMBELI ================= -->
+
+    <!-- 1. BERANDA / HOME VIEW -->
+    <div id="view-home" class="page-view">
+        <div class="section-title"><i class="fas fa-fire"></i> Produk Bestseller</div>
+        <div class="bestseller-scroll" id="bestseller-grid"></div>
+
+        <div class="section-title"><i class="fas fa-mobile-alt"></i> Koleksi Pilihan</div>
+        <div class="product-grid" id="regular-grid"></div>
+    </div>
+
+    <!-- 2. DETAIL PRODUK VIEW (DENGAN VIDEO & HYPERLINK SPEC) -->
+    <div id="view-product-detail" class="page-view">
+        <button class="btn-back-nav" onclick="switchTab('home')">
+            <i class="fas fa-arrow-left"></i> Kembali ke Beranda
+        </button>
+        <div class="detail-card" id="detail-card-content"></div>
+    </div>
+
+    <!-- 3. KERANJANG VIEW -->
+    <div id="view-cart" class="page-view">
+        <div class="section-title"><i class="fas fa-shopping-bag"></i> Keranjang Saya</div>
+        <div id="cart-items-container" style="max-width: 800px; margin: 0 auto;"></div>
+        <div class="cart-footer">
+            <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Total (Inc. Ongkir Rp 5.000):</span>
+                <div id="cart-total-price" style="font-size: 0.95rem; font-weight: bold; color: var(--dark-green);">Rp 0</div>
+            </div>
+            <button class="btn btn-buy" style="padding: 10px 16px; flex: initial;" onclick="goToCheckoutFromCart()">Lanjut Bayar</button>
+        </div>
+    </div>
+
+    <!-- 4. PROFIL VIEW -->
+    <div id="view-profile" class="page-view">
+        <div class="section-title" style="justify-content: center;"><i class="fas fa-user-circle"></i> Profil Saya</div>
+        <div class="detail-card" style="text-align: center;">
+            <h3 id="profile-display-name" style="color: var(--dark-green);">Azariya</h3>
+            <p id="profile-display-email" style="font-size: 0.85rem; color: var(--text-muted);">azariya@email.com</p>
+            <p id="profile-display-phone" style="font-size: 0.85rem; color: var(--text-muted);">+62 812-3456-7890</p>
+            <p id="profile-display-address" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Jl. Cempaka Indah No. 45</p>
+            <button class="btn-auth" style="background-color: var(--danger-red); margin-top: 20px;" onclick="logoutApp()">
+                <i class="fas fa-sign-out-alt"></i> Keluar
+            </button>
+        </div>
+    </div>
+
+    <!-- 5. STATUS PESANAN VIEW -->
+    <div id="view-orders" class="page-view">
+        <div class="section-title"><i class="fas fa-truck"></i> Status Pesanan</div>
+        <div id="orders-container"></div>
+    </div>
+
+    <!-- CHECKOUT VIEW -->
+    <div id="view-checkout" class="page-view">
+        <div class="section-title" style="justify-content: center;"><i class="fas fa-file-invoice"></i> Konfirmasi Pesanan</div>
+        <div class="detail-card">
+            <strong>Ringkasan Pesanan:</strong>
+            <div id="checkout-summary-items" style="margin-top: 10px;"></div>
+            <hr style="margin: 10px 0;">
+            <div style="display: flex; justify-content: space-between; font-weight: bold;">
+                <span>Total Bayar (COD):</span>
+                <span id="checkout-total-price" style="color: var(--dark-green);">Rp 0</span>
+            </div>
+            <button class="btn btn-buy" style="width: 100%; padding: 12px; margin-top: 15px;" onclick="processCheckout()">Proses Pesanan (COD)</button>
+        </div>
+    </div>
+
+    <!-- THANK YOU VIEW -->
+    <div id="view-thankyou" class="page-view">
+        <div style="text-align: center; padding: 40px 20px;">
+            <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--primary-green); margin-bottom: 15px;"></i>
+            <h2>Terima kasih telah berbelanja!</h2>
+            <p style="color: var(--text-muted); margin: 10px 0 20px;">Pesanan gadget kamu sedang diproses.</p>
+            <button class="btn btn-buy" style="margin: 0 auto; padding: 10px 20px;" onclick="switchTab('orders')">Lihat Status Pesanan</button>
+        </div>
+    </div>
+
+
+    <!-- ================= HALAMAN ADMIN ================= -->
+
+    <!-- GAMBAR 3: MENU UTAMA ADMIN -->
+    <div id="view-admin-menu" class="page-view">
+        <h2 style="text-align: center; color: var(--dark-green); margin-top: 30px;">Silakan pilih salah satu menu</h2>
+        <div class="admin-nav-container">
+            <button class="btn-admin-menu" onclick="switchAdminTab('dashboard')">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </button>
+            <button class="btn-admin-menu" onclick="switchAdminTab('report')">
+                <i class="fas fa-file-invoice-dollar"></i> Laporan
+            </button>
+        </div>
+    </div>
+
+    <!-- GAMBAR 4: DASHBOARD ADMIN (DAFTAR PRODUK TOKO) -->
+    <div id="view-admin-dashboard" class="page-view">
+        <button class="btn-back-nav" onclick="switchAdminTab('menu')"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="color: var(--dark-green);">Dashboard Admin</h3>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn" style="background-color: var(--accent-green); color: white;"><i class="fas fa-plus-circle"></i> Input Barang</button>
+                <button class="btn" style="background-color: var(--dark-green); color: white;"><i class="fas fa-boxes"></i> View Produk</button>
+            </div>
+        </div>
+
+        <div class="admin-table-card">
+            <h4 style="margin-bottom: 12px; color: var(--dark-green);"><i class="fas fa-list"></i> Daftar Seluruh Produk Toko</h4>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Foto</th>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                        <th>Terjual</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-product-table-body">
+                    <!-- Populated via JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- GAMBAR 5: LAPORAN PENJUALAN ADMIN -->
+    <div id="view-admin-report" class="page-view">
+        <button class="btn-back-nav" onclick="switchAdminTab('menu')"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+        <h3 style="text-align: right; color: var(--dark-green); font-size: 0.9rem;">Laporan Penjualan</h3>
+        
+        <p style="text-align: center; font-weight: bold; margin: 15px 0 10px; color: var(--dark-green);">Pilih Jenis Laporan Penjualan:</p>
+        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+            <button class="btn-admin-menu" style="font-size: 0.85rem; padding: 10px 15px;"><i class="fas fa-calendar-day"></i> Laporan Harian</button>
+            <button class="btn-admin-menu" style="font-size: 0.85rem; padding: 10px 15px; background: #3c5d46;"><i class="fas fa-calendar-alt"></i> Laporan Bulanan</button>
+            <button class="btn-admin-menu" style="font-size: 0.85rem; padding: 10px 15px; background: var(--accent-green);"><i class="fas fa-chart-line"></i> Laporan Tahunan</button>
+        </div>
+
+        <div class="report-summary-card">
+            <h4 style="text-align: center; margin-bottom: 15px; color: var(--dark-green);">Laporan Penjualan Harian</h4>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Periode</th>
+                        <th>Total Transaksi</th>
+                        <th>Total Pendapatan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hari Ini (11/8/2026)</td>
+                        <td>2 Transaksi</td>
+                        <td style="font-weight: bold; color: var(--dark-green);">Rp 10.056.000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- GAMBAR 6: MODAL POP-UP KERANJANG (BOTTOM SHEET) -->
+    <div id="cart-modal" class="cart-modal-overlay">
+        <div class="cart-modal-content">
+            <button class="close-modal-btn" onclick="closeCartModal()">&times;</button>
+            <div class="cart-modal-header">
+                <img id="modal-img" src="" alt="" class="cart-modal-img">
+                <div>
+                    <div class="cart-modal-price" id="modal-price">Rp 0</div>
+                    <div class="cart-modal-flash">Harga Flash Sale</div>
+                    <div class="cart-modal-stok" id="modal-stok">Stok: 31</div>
+                </div>
+            </div>
+
+            <div class="option-group">
+                <span class="option-label">Warna</span>
+                <div class="option-buttons" id="modal-color-options"></div>
+            </div>
+
+            <div class="option-group">
+                <span class="option-label">Varian / Kapasitas</span>
+                <div class="option-buttons" id="modal-size-options"></div>
+            </div>
+
+            <div class="option-group" style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="option-label" style="margin: 0;">Jumlah</span>
+                <div class="quantity-control">
+                    <button class="qty-btn" onclick="changeQty(-1)">-</button>
+                    <input type="text" id="modal-qty" class="qty-input" value="1" readonly>
+                    <button class="qty-btn" onclick="changeQty(1)">+</button>
+                </div>
+            </div>
+
+            <button class="btn-confirm-cart" onclick="confirmAddToCart()">Masukkan Keranjang</button>
+        </div>
+    </div>
+
+    <!-- NAVBAR BOTTOM PEMBELI -->
+    <nav class="bottom-nav" id="customer-nav" style="display: none;">
+        <button class="nav-item active" id="nav-home" onclick="switchTab('home')">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </button>
+        <button class="nav-item" id="nav-cart" onclick="switchTab('cart')" style="position: relative;">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Keranjang</span>
+            <span class="badge-count" id="cart-badge" style="display:none;">0</span>
+        </button>
+        <button class="nav-item" id="nav-profile" onclick="switchTab('profile')">
+            <i class="fas fa-user"></i>
+            <span>Profil</span>
+        </button>
+        <button class="nav-item" id="nav-orders" onclick="switchTab('orders')">
+            <i class="fas fa-box"></i>
+            <span>Pesanan</span>
+        </button>
+    </nav>
+
+    <script>
+        const SHIPPING_FEE = 5000;
+        let currentUserRole = ''; // 'pembeli' atau 'admin'
+
+        // DATA PRODUK GADGET (4 BESTSELLER & 2 KOLEKSI BIASA)
+        const products = [
+            // 4 Bestseller Gadget
+            { 
+                id: 1, 
+                name: "iPhone 15 Pro Max", 
+                price: 21999000, 
+                isBestseller: true, 
+                image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&q=80", 
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: "Smartphone flagship dengan chip A17 Pro, bodi titanium ringan, dan kamera utama 48 MP Zoom 5x.", 
+                specUrl: "https://www.apple.com/iphone-15-pro/",
+                rating: 4.9, 
+                sold: 450, 
+                stok: 25,
+                colors: ["Titanium Alami", "Titanium Hitam"], 
+                sizes: ["256GB", "512GB"] 
+            },
+            { 
+                id: 2, 
+                name: "Samsung Galaxy S24 Ultra", 
+                price: 19999000, 
+                isBestseller: true, 
+                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&q=80", 
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: "Dilengkapi Galaxy AI pintar, Stylus Pen bawaan, dan kamera super jernih 200 MP.", 
+                specUrl: "https://www.samsung.com/galaxy-s24-ultra/",
+                rating: 4.9, 
+                sold: 380, 
+                stok: 18,
+                colors: ["Titanium Gray", "Titanium Black"], 
+                sizes: ["256GB", "512GB"] 
+            },
+            { 
+                id: 3, 
+                name: "MacBook Pro M3 14 Inch", 
+                price: 25999000, 
+                isBestseller: true, 
+                image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80", 
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: "Laptop profesional performa tinggi dengan Chipset Apple M3 Pro, layar Liquid Retina XDR.", 
+                specUrl: "https://www.apple.com/macbook-pro/",
+                rating: 4.8, 
+                sold: 210, 
+                stok: 12,
+                colors: ["Space Black", "Silver"], 
+                sizes: ["18GB / 512GB", "36GB / 1TB"] 
+            },
+            { 
+                id: 4, 
+                name: "iPad Air M2 2024", 
+                price: 11499000, 
+                isBestseller: true, 
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&q=80", 
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: "Tablet serbaguna dan cepat bertenaga chip M2, mendukung Apple Pencil Pro.", 
+                specUrl: "https://www.apple.com/ipad-air/",
+                rating: 4.7, 
+                sold: 190, 
+                stok: 30,
+                colors: ["Space Gray", "Starlight"], 
+                sizes: ["128GB", "256GB"] 
+            },
+
+            // 2 Produk Biasa
+            { 
+                id: 5, 
+                name: "Xiaomi 14 Ultra", 
+                price: 16999000, 
+                isBestseller: false, 
+                image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&q=80", 
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: "Smartphone fotografi legendaris kolaborasi Leica dengan sensor lensa 1 inci.", 
+                specUrl: "https://www.mi.com/global/product/xiaomi-14-ultra/",
+                rating: 4.8, 
+                sold: 120, 
+                stok: 15,
+                colors: ["Hitam", "Putih"], 
+                sizes: ["512GB"] 
+            },
+            { 
+                id: 6, 
+                name: "Sony WH-1000XM5 Headphones", 
+                price: 5499000, 
+                isBestseller: false, 
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80", 
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: "Headphone Peredam Bising (Noise Cancelling) terbaik di kelasnya dengan bass mendalam.", 
+                specUrl: "https://www.sony.com/electronics/headband-headphones/wh-1000xm5",
+                rating: 4.9, 
+                sold: 310, 
+                stok: 40,
+                colors: ["Black", "Silver"], 
+                sizes: ["Standard"] 
+            }
+        ];
+
+        let cart = [];
+        let myOrders = [];
+        let userProfile = {
+            email: "azariya@email.com",
+            username: "Azariya",
+            phone: "+62 812-3456-7890",
+            address: "Jl. Cempaka Indah No. 45"
+        };
+
+        // SELECTION ALUR LOGIN
+        function selectRole(role) {
+            document.getElementById('auth-role-selection').classList.remove('active');
+            currentUserRole = role;
+
+            if (role === 'admin') {
+                document.getElementById('auth-admin-login').classList.add('active');
+            } else {
+                document.getElementById('auth-step-1').classList.add('active');
+            }
+        }
+
+        function backToRoleSelection() {
+            document.querySelectorAll('.auth-overlay').forEach(el => el.classList.remove('active'));
+            document.getElementById('auth-role-selection').classList.add('active');
+        }
+
+        // LOGIN ADMIN VERIFIKASI (USERNAME: aza, PASSWORD: 54321)
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('admin-username').value.trim();
+            const p = document.getElementById('admin-password').value.trim();
+
+            if (u === 'aza' && p === '54321') {
+                document.getElementById('auth-admin-login').classList.remove('active');
+                document.getElementById('customer-nav').style.display = 'none';
+                switchAdminTab('menu');
+            } else {
+                alert("Username atau Password Admin Salah! (Gunakan Username: aza & Password: 54321)");
+            }
+        }
+
+        // NAVIGASI KHUSUS ADMIN
+        function switchAdminTab(screen) {
+            document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+            if (screen === 'menu') {
+                document.getElementById('view-admin-menu').classList.add('active');
+            } else if (screen === 'dashboard') {
+                document.getElementById('view-admin-dashboard').classList.add('active');
+                renderAdminDashboard();
+            } else if (screen === 'report') {
+                document.getElementById('view-admin-report').classList.add('active');
+            }
+        }
+
+        function renderAdminDashboard() {
+            const tbody = document.getElementById('admin-product-table-body');
+            tbody.innerHTML = '';
+            products.forEach(p => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><img src="${p.image}" alt=""></td>
+                        <td><strong>${p.name}</strong></td>
+                        <td>${formatRupiah(p.price)}</td>
+                        <td>${p.sold}</td>
+                        <td>⭐ ${p.rating}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        // ALUR LOGIN PEMBELI
+        function handleAuthStep1(e) {
+            e.preventDefault();
+            userProfile.email = document.getElementById('input-email').value;
+            document.getElementById('auth-step-1').classList.remove('active');
+            document.getElementById('auth-step-2').classList.add('active');
+        }
+
+        function handleAuthStep2(e) {
+            e.preventDefault();
+            userProfile.username = document.getElementById('input-username').value;
+            document.getElementById('auth-step-2').classList.remove('active');
+            document.getElementById('auth-step-3').classList.add('active');
+        }
+
+        function handleAuthStep3(e) {
+            e.preventDefault();
+            userProfile.phone = document.getElementById('input-phone').value;
+            userProfile.address = document.getElementById('input-address').value;
+
+            document.getElementById('auth-step-3').classList.remove('active');
+            document.getElementById('welcome-user-name').innerText = `Selamat datang, ${userProfile.username}!`;
+            document.getElementById('auth-step-welcome').classList.add('active');
+        }
+
+        function startApp() {
+            document.getElementById('auth-step-welcome').classList.remove('active');
+            document.getElementById('customer-nav').style.display = 'flex';
+            renderProducts();
+            switchTab('home');
+        }
+
+        function logoutApp() {
+            document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+            document.getElementById('customer-nav').style.display = 'none';
+            backToRoleSelection();
+        }
+
+        function formatRupiah(num) {
+            return "Rp " + num.toLocaleString('id-ID');
+        }
+
+        // RENDER PRODUK BERANDA
+        function renderProducts() {
+            const bestsellerGrid = document.getElementById('bestseller-grid');
+            const regularGrid = document.getElementById('regular-grid');
+
+            bestsellerGrid.innerHTML = '';
+            regularGrid.innerHTML = '';
+
+            products.forEach(p => {
+                const cardHTML = `
+                    <div class="product-card" onclick="openProductDetail(${p.id})">
+                        ${p.isBestseller ? '<span class="badge-bestseller">Bestseller</span>' : ''}
+                        <img src="${p.image}" alt="${p.name}" class="product-image">
+                        <div class="product-info">
+                            <div class="product-title">${p.name}</div>
+                            <div class="product-price">${formatRupiah(p.price)}</div>
+                            <div class="product-description">${p.desc}</div>
+                            <div class="product-meta">⭐ ${p.rating} <span>| terjual ${p.sold}</span></div>
+                            <div class="product-actions" onclick="event.stopPropagation();">
+                                <button class="btn btn-cart" onclick="openAddToCartModal(${p.id})"><i class="fas fa-cart-plus"></i></button>
+                                <button class="btn btn-buy" onclick="directBuy(${p.id})">Beli</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                if (p.isBestseller) bestsellerGrid.innerHTML += cardHTML;
+                else regularGrid.innerHTML += cardHTML;
+            });
+        }
+
+        // DETAIL PRODUK PAGE (HYPERLINK & VIDEO INCLUDED)
+        function openProductDetail(id) {
+            const product = products.find(p => p.id === id);
+            switchTab('product-detail');
+
+            const detailContainer = document.getElementById('detail-card-content');
+            detailContainer.innerHTML = `
+                <div class="detail-img-box">
+                    <video controls poster="${product.image}">
+                        <source src="${product.video}" type="video/mp4">
+                        Browser tidak mendukung pemutar video.
+                    </video>
+                </div>
+                <div style="font-size:0.75rem; color: var(--text-muted); margin-bottom: 5px;">*Geser/Putar video untuk melihat detail produk</div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-size:1.3rem; font-weight:bold; color:var(--danger-red);">${formatRupiah(product.price)}</div>
+                    <div style="font-size:0.8rem; color:var(--text-muted);">${product.sold} Terjual</div>
+                </div>
+                <div style="font-size:1.1rem; font-weight:bold; margin: 8px 0;">${product.name}</div>
+
+                <div style="background:var(--bg-color); padding:12px; border-radius:8px; margin: 15px 0; font-size:0.85rem;">
+                    <strong>Deskripsi Produk:</strong>
+                    <p style="margin-top:5px; color:var(--text-dark);">${product.desc}</p>
+                    <!-- HYPERLINK EKSPLISIT -->
+                    <div style="margin-top: 10px;">
+                        🔗 <strong>Spesifikasi Lengkap:</strong> 
+                        <a href="${product.specUrl}" target="_blank" style="color: var(--primary-green); font-weight: bold; text-decoration: underline;">
+                            Klik disini untuk lihat spesifikasi resmi ${product.name}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="product-actions" style="margin-top:20px;">
+                    <button class="btn btn-cart" style="padding:12px;" onclick="openAddToCartModal(${product.id})"><i class="fas fa-cart-plus"></i> + Keranjang</button>
+                    <button class="btn btn-buy" style="padding:12px;" onclick="directBuy(${product.id})">Beli Sekarang</button>
+                </div>
+            `;
+        }
+
+        // GAMBAR 6: POP-UP KERANJANG (BOTTOM SHEET MODAL)
+        let selectedProductForCart = null;
+        let selectedColor = '';
+        let selectedSize = '';
+        let currentQty = 1;
+
+        function openAddToCartModal(id) {
+            selectedProductForCart = products.find(p => p.id === id);
+            selectedColor = selectedProductForCart.colors[0];
+            selectedSize = selectedProductForCart.sizes[0];
+            currentQty = 1;
+
+            document.getElementById('modal-img').src = selectedProductForCart.image;
+            document.getElementById('modal-price').innerText = formatRupiah(selectedProductForCart.price);
+            document.getElementById('modal-stok').innerText = `Stok: ${selectedProductForCart.stok}`;
+            document.getElementById('modal-qty').value = currentQty;
+
+            // Render Warna
+            const colorContainer = document.getElementById('modal-color-options');
+            colorContainer.innerHTML = selectedProductForCart.colors.map((c, i) => `
+                <button class="opt-btn ${i === 0 ? 'active' : ''}" onclick="selectModalColor('${c}', this)">${c}</button>
+            `).join('');
+
+            // Render Ukuran/Varian
+            const sizeContainer = document.getElementById('modal-size-options');
+            sizeContainer.innerHTML = selectedProductForCart.sizes.map((s, i) => `
+                <button class="opt-btn ${i === 0 ? 'active' : ''}" onclick="selectModalSize('${s}', this)">${s}</button>
+            `).join('');
+
+            document.getElementById('cart-modal').classList.add('active');
+        }
+
+        function closeCartModal() {
+            document.getElementById('cart-modal').classList.remove('active');
+        }
+
+        function selectModalColor(color, btn) {
+            selectedColor = color;
+            btn.parentElement.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function selectModalSize(size, btn) {
+            selectedSize = size;
+            btn.parentElement.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function changeQty(amt) {
+            if (currentQty + amt >= 1 && currentQty + amt <= selectedProductForCart.stok) {
+                currentQty += amt;
+                document.getElementById('modal-qty').value = currentQty;
+            }
+        }
+
+        function confirmAddToCart() {
+            cart.push({
+                cartId: Date.now(),
+                product: selectedProductForCart,
+                color: selectedColor,
+                size: selectedSize,
+                qty: currentQty,
+                selected: true
+            });
+
+            updateCartBadge();
+            closeCartModal();
+            alert(`${selectedProductForCart.name} (${selectedColor}, ${selectedSize}) x${currentQty} dimasukkan ke keranjang!`);
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cart-badge');
+            if (cart.length > 0) {
+                badge.style.display = 'block';
+                badge.innerText = cart.length;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        // SWITCH TAB PEMBELI
+        function switchTab(tabName) {
+            document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+
+            const targetView = document.getElementById(`view-${tabName}`);
+            const targetNav = document.getElementById(`nav-${tabName}`);
+
+            if (targetView) targetView.classList.add('active');
+            if (targetNav) targetNav.classList.add('active');
+
+            if (tabName === 'cart') renderCart();
+            if (tabName === 'orders') renderOrders();
+        }
+
+        // KERANJANG & CHECKOUT
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            if (cart.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--text-muted);">Keranjangmu masih kosong.</div>`;
+                document.getElementById('cart-total-price').innerText = "Rp 0";
+                return;
+            }
+
+            container.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.product.price * item.qty;
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.product.image}" alt="">
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.product.name}</div>
+                            <div style="font-size:0.7rem; color:var(--text-muted);">Variasi: ${item.color}, ${item.size} | Qty: ${item.qty}</div>
+                            <div class="cart-item-price">${formatRupiah(item.product.price * item.qty)}</div>
+                        </div>
+                        <button style="border:none; background:none; color: var(--danger-red); cursor:pointer;" onclick="removeFromCart(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            document.getElementById('cart-total-price').innerText = formatRupiah(total + SHIPPING_FEE);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartBadge();
+            renderCart();
+        }
+
+        function directBuy(id) {
+            const product = products.find(p => p.id === id);
+            cart = [{
+                cartId: Date.now(),
+                product: product,
+                color: product.colors[0],
+                size: product.sizes[0],
+                qty: 1,
+                selected: true
+            }];
+            updateCartBadge();
+            goToCheckoutFromCart();
+        }
+
+        function goToCheckoutFromCart() {
+            if (cart.length === 0) {
+                alert("Keranjang kamu kosong!");
+                return;
+            }
+            switchTab('checkout');
+
+            const summaryEl = document.getElementById('checkout-summary-items');
+            summaryEl.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                total += item.product.price * item.qty;
+                summaryEl.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:5px;">
+                        <span>${item.product.name} (x${item.qty})</span>
+                        <strong>${formatRupiah(item.product.price * item.qty)}</strong>
+                    </div>
+                `;
+            });
+
+            document.getElementById('checkout-total-price').innerText = formatRupiah(total + SHIPPING_FEE);
+        }
+
+        function processCheckout() {
+            let total = cart.reduce((sum, item) => sum + (item.product.price * item.qty), 0) + SHIPPING_FEE;
+            myOrders.unshift({
+                id: "VCZ-" + Math.floor(100000 + Math.random() * 900000),
+                total: total,
+                status: "Dikemas",
+                itemsCount: cart.length
+            });
+
+            cart = [];
+            updateCartBadge();
+            switchTab('thankyou');
+        }
+
+        function renderOrders() {
+            const container = document.getElementById('orders-container');
+            if (myOrders.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--text-muted);">Belum ada pesanan aktif.</div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            myOrders.forEach(o => {
+                container.innerHTML += `
+                    <div style="background:white; padding:15px; border-radius:10px; margin-bottom:10px; border-left:4px solid var(--primary-green);">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                            <strong>#${o.id}</strong>
+                            <span style="background:var(--light-green); color:var(--dark-green); padding:2px 8px; border-radius:10px; font-size:0.75rem;">${o.status}</span>
+                        </div>
+                        <div style="font-size:0.85rem; font-weight:bold; color:var(--dark-green);">${formatRupiah(o.total)} (COD)</div>
+                    </div>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>
