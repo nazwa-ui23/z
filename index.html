@@ -388,6 +388,170 @@
             margin: 0 auto;
         }
 
+        /* STYLES DESAIN PROFIL BARU (FOTO 1) */
+        .profile-container {
+            max-width: 450px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .profile-header-card {
+            background: linear-gradient(135deg, var(--accent-green), var(--primary-green));
+            border-radius: 15px;
+            padding: 25px 15px 15px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .profile-avatar-wrapper {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 10px;
+        }
+
+        .profile-avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .profile-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--dark-green);
+            margin-top: 5px;
+        }
+
+        .profile-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark-green);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-top: 4px;
+            border: 1px solid var(--accent-green);
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            background: #f8faf8;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            text-align: center;
+            border: 1px solid var(--light-green);
+        }
+
+        .stat-val {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--dark-green);
+        }
+
+        .stat-lbl {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .profile-info-item {
+            background: #f8faf8;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid var(--light-green);
+        }
+
+        .profile-info-item i {
+            color: var(--primary-green);
+            font-size: 1.2rem;
+        }
+
+        .profile-info-text label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .profile-info-text div {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        /* STYLES CHECKOUT / KONFIRMASI PESANAN (FOTO 2) */
+        .checkout-card-section {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid var(--light-green);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .checkout-section-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--dark-green);
+            margin-bottom: 10px;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .payment-btn {
+            border: 1.5px solid #ccc;
+            padding: 12px;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.2s;
+        }
+
+        .payment-btn.active {
+            border-color: var(--primary-green);
+            background: var(--light-green);
+        }
+
+        .payment-btn i {
+            font-size: 1.5rem;
+            color: var(--dark-green);
+        }
+
+        .payment-btn-text strong {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--dark-green);
+        }
+
+        .payment-btn-text span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
         /* MEDIA SLIDER DETAIL PRODUK (FOTO + VIDEO) */
         .media-slider {
             display: flex;
@@ -639,7 +803,6 @@
             margin: 20px auto;
         }
 
-        /* UPLOAD PREVIEW STYLES */
         .upload-preview-box {
             border: 2px dashed var(--accent-green);
             border-radius: 10px;
@@ -671,13 +834,6 @@
             gap: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.03);
             border: 1px solid var(--light-green);
-        }
-
-        .cart-checkbox {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--primary-green);
-            cursor: pointer;
         }
 
         .cart-item img {
@@ -770,7 +926,6 @@
             border-radius: 10px;
         }
 
-        /* RESPONSIVE LAYOUT */
         @media (min-width: 768px) {
             .product-grid {
                 grid-template-columns: repeat(4, 1fr);
@@ -865,11 +1020,11 @@
             <form onsubmit="handleAuthStep3(event)">
                 <div class="form-group">
                     <label for="input-phone">Nomor Telepon</label>
-                    <input type="tel" id="input-phone" class="form-input" placeholder="contoh: +62 812-3456-7890" required>
+                    <input type="tel" id="input-phone" class="form-input" placeholder="contoh: 0856332524823" required>
                 </div>
                 <div class="form-group">
                     <label for="input-address">Alamat Pengiriman Utama</label>
-                    <textarea id="input-address" class="form-input" rows="3" placeholder="Jl. Cempaka Indah No. 45..." style="resize: vertical;" required></textarea>
+                    <textarea id="input-address" class="form-input" rows="3" placeholder="Jl. SMK Texmaco Semarang..." style="resize: vertical;" required></textarea>
                 </div>
                 <button type="submit" class="btn-auth">Masuk / Daftar <i class="fas fa-check"></i></button>
             </form>
@@ -924,38 +1079,121 @@
         </div>
     </div>
 
-    <!-- 4. PROFIL VIEW -->
+    <!-- 4. PROFIL VIEW (REVISI SESUAI FOTO 1) -->
     <div id="view-profile" class="page-view">
         <div class="section-title" style="justify-content: center;"><i class="fas fa-user-circle"></i> Profil Saya</div>
-        <div class="detail-card" style="text-align: center;">
-            <h3 id="profile-display-name" style="color: var(--dark-green);">Azariya</h3>
-            <p id="profile-display-email" style="font-size: 0.85rem; color: var(--text-muted);">azariya@email.com</p>
-            <p id="profile-display-phone" style="font-size: 0.85rem; color: var(--text-muted);">+62 812-3456-7890</p>
-            <p id="profile-display-address" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Jl. Cempaka Indah No. 45</p>
-            <button class="btn-auth" style="background-color: var(--danger-red); margin-top: 20px;" onclick="logoutApp()">
-                <i class="fas fa-sign-out-alt"></i> Keluar
+        
+        <div class="profile-container">
+            <div class="profile-header-card">
+                <div class="profile-avatar-wrapper">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80" alt="Avatar" class="profile-avatar-img">
+                </div>
+                <div class="profile-name" id="profile-display-name">Azana</div>
+                <div class="profile-badge"><i class="fas fa-crown" style="color: #f1c40f;"></i> VIP Member</div>
+            </div>
+
+            <div class="profile-stats">
+                <div>
+                    <div class="stat-val" id="profile-stat-buy">5</div>
+                    <div class="stat-lbl">Beli</div>
+                </div>
+                <div>
+                    <div class="stat-val">Aktif</div>
+                    <div class="stat-lbl">Status COD</div>
+                </div>
+                <div>
+                    <div class="stat-val">100%</div>
+                    <div class="stat-lbl">Terverifikasi</div>
+                </div>
+            </div>
+
+            <div class="profile-info-item">
+                <i class="fas fa-envelope"></i>
+                <div class="profile-info-text">
+                    <label>Email</label>
+                    <div id="profile-display-email">aza@gmail.com</div>
+                </div>
+            </div>
+
+            <div class="profile-info-item">
+                <i class="fas fa-phone-alt"></i>
+                <div class="profile-info-text">
+                    <label>Nomor Telepon</label>
+                    <div id="profile-display-phone">0856332524823</div>
+                </div>
+            </div>
+
+            <div class="profile-info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div class="profile-info-text">
+                    <label>Alamat Utama Pengiriman</label>
+                    <div id="profile-display-address">jl. SMK Texmaco Semarang Jawa Tengah Indonesia</div>
+                </div>
+            </div>
+
+            <button class="btn-auth" style="background-color: var(--danger-red); margin-top: 15px;" onclick="logoutApp()">
+                <i class="fas fa-sign-out-alt"></i> Keluar (Logout)
             </button>
         </div>
     </div>
 
-    <!-- 5. STATUS PESANAN VIEW -->
+    <!-- 5. STATUS PESANAN VIEW (REVISI SESUAI FOTO 3) -->
     <div id="view-orders" class="page-view">
-        <div class="section-title"><i class="fas fa-truck"></i> Status Pesanan</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <div class="section-title" style="margin:0;"><i class="fas fa-truck"></i> Status Pesanan</div>
+            <button class="btn" style="background: var(--danger-red); color: white;" onclick="clearOrderHistory()"><i class="fas fa-trash"></i> Hapus Riwayat</button>
+        </div>
         <div id="orders-container"></div>
     </div>
 
-    <!-- CHECKOUT VIEW -->
+    <!-- CHECKOUT VIEW (REVISI SESUAI FOTO 2) -->
     <div id="view-checkout" class="page-view">
         <div class="section-title" style="justify-content: center;"><i class="fas fa-file-invoice"></i> Konfirmasi Pesanan</div>
-        <div class="detail-card">
-            <strong>Ringkasan Pesanan:</strong>
-            <div id="checkout-summary-items" style="margin-top: 10px;"></div>
-            <hr style="margin: 10px 0;">
-            <div style="display: flex; justify-content: space-between; font-weight: bold;">
-                <span>Total Bayar (COD):</span>
-                <span id="checkout-total-price" style="color: var(--dark-green);">Rp 0</span>
+        <div class="detail-card" style="max-width: 500px;">
+            
+            <div class="checkout-card-section">
+                <div class="checkout-section-title">Alamat Pengiriman:</div>
+                <div id="checkout-user-name" style="font-weight: bold; color: var(--dark-green);">Azana <span id="checkout-user-phone" style="font-weight: normal; color: var(--text-muted);">(0856332524823)</span></div>
+                <div id="checkout-user-address" style="font-size: 0.85rem; color: var(--text-dark); margin-top: 4px;">jl. SMK Texmaco Semarang</div>
             </div>
-            <button class="btn btn-buy" style="width: 100%; padding: 12px; margin-top: 15px;" onclick="processCheckout()">Proses Pesanan (COD)</button>
+
+            <div class="checkout-card-section">
+                <div class="checkout-section-title">Metode Pembayaran:</div>
+                <div class="payment-methods">
+                    <div class="payment-btn active" id="pay-cod" onclick="selectPaymentMethod('COD')">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <div class="payment-btn-text">
+                            <strong>COD</strong>
+                            <span>Bayar di Tempat</span>
+                        </div>
+                    </div>
+                    <div class="payment-btn" id="pay-qris" onclick="selectPaymentMethod('QRIS')">
+                        <i class="fas fa-qrcode"></i>
+                        <div class="payment-btn-text">
+                            <strong>QRIS</strong>
+                            <span>Scan Barcode</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkout-card-section">
+                <div class="checkout-section-title">Ringkasan Produk:</div>
+                <div id="checkout-summary-items"></div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; color:var(--text-muted); margin-top:8px;">
+                    <span>Ongkos Kirim (Flat):</span>
+                    <span>Rp 5.000</span>
+                </div>
+                <hr style="margin: 10px 0; border: none; border-top: 1px dashed #ccc;">
+                <div style="display: flex; justify-content: space-between; font-size: 1rem; font-weight: bold;">
+                    <span>Total Tagihan:</span>
+                    <span id="checkout-total-price" style="color: var(--dark-green);">Rp 0</span>
+                </div>
+            </div>
+
+            <button class="btn btn-buy" style="width: 100%; padding: 14px; font-size: 1rem;" onclick="processCheckout()">
+                <i class="fas fa-check-circle"></i> Klik Checkout
+            </button>
         </div>
     </div>
 
@@ -964,19 +1202,22 @@
         <div style="text-align: center; padding: 40px 20px;">
             <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--primary-green); margin-bottom: 15px;"></i>
             <h2>Terima kasih telah berbelanja!</h2>
-            <p style="color: var(--text-muted); margin: 10px 0 20px;">Pesanan gadget kamu sedang diproses.</p>
+            <p style="color: var(--text-muted); margin: 10px 0 20px;">Pesanan gadget kamu sedang diproses oleh admin.</p>
             <button class="btn btn-buy" style="margin: 0 auto; padding: 10px 20px;" onclick="switchTab('orders')">Lihat Status Pesanan</button>
         </div>
     </div>
 
     <!-- ================= HALAMAN ADMIN ================= -->
 
-    <!-- GAMBAR 3 UTAMA: MENU ADMIN -->
+    <!-- MENU ADMIN -->
     <div id="view-admin-menu" class="page-view">
         <h2 style="text-align: center; color: var(--dark-green); margin-top: 30px;">Silakan pilih salah satu menu</h2>
         <div class="admin-nav-container">
             <button class="btn-admin-menu" onclick="switchAdminTab('dashboard')">
-                <i class="fas fa-tachometer-alt"></i> Dashboard
+                <i class="fas fa-tachometer-alt"></i> Dashboard Toko
+            </button>
+            <button class="btn-admin-menu" onclick="switchAdminTab('transactions')" style="background: #e67e22;">
+                <i class="fas fa-boxes"></i> Kelola Transaksi (<span id="admin-pending-count">0</span>)
             </button>
             <button class="btn-admin-menu" onclick="switchAdminTab('report')">
                 <i class="fas fa-file-invoice-dollar"></i> Laporan
@@ -984,7 +1225,7 @@
         </div>
     </div>
 
-    <!-- DASHBOARD ADMIN (DAFTAR PRODUK ATAU FORM INPUT) -->
+    <!-- DASHBOARD ADMIN -->
     <div id="view-admin-dashboard" class="page-view">
         <button class="btn-back-nav" onclick="switchAdminTab('menu')"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
         
@@ -1000,7 +1241,6 @@
             </div>
         </div>
 
-        <!-- TAMPILAN 1: DAFTAR SELURUH PRODUK TOKO (FOTO KE-1 KAMU) -->
         <div id="admin-subview-list" class="admin-table-card">
             <h4 style="margin-bottom: 12px; color: var(--dark-green);"><i class="fas fa-list"></i> Daftar Seluruh Produk Toko</h4>
             <table class="admin-table">
@@ -1013,13 +1253,10 @@
                         <th>Rating</th>
                     </tr>
                 </thead>
-                <tbody id="admin-product-table-body">
-                    <!-- Populated via JS -->
-                </tbody>
+                <tbody id="admin-product-table-body"></tbody>
             </table>
         </div>
 
-        <!-- TAMPILAN 2: FORM INPUT BARANG BARU (FOTO KE-3 KAMU) -->
         <div id="admin-subview-input" class="detail-card" style="display: none; max-width: 500px;">
             <h3 style="text-align: center; color: var(--dark-green); margin-bottom: 20px;">
                 <i class="fas fa-box"></i> Form Input Barang Baru
@@ -1055,7 +1292,27 @@
         </div>
     </div>
 
-    <!-- LAPORAN PENJUALAN ADMIN (FOTO KE-2 KAMU) -->
+    <!-- KELOLA TRANSAKSI PESANAN (FUNGSI BARU UNTUK ADMIN) -->
+    <div id="view-admin-transactions" class="page-view">
+        <button class="btn-back-nav" onclick="switchAdminTab('menu')"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+        <h3 style="color: var(--dark-green); margin-bottom: 15px;"><i class="fas fa-tasks"></i> Update Status Pesanan Pembeli</h3>
+        <div class="admin-table-card">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Kode Pesanan</th>
+                        <th>Nama Pemesan</th>
+                        <th>Total</th>
+                        <th>Status Saat Ini</th>
+                        <th>Aksi Update Status</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-transactions-table-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- LAPORAN PENJUALAN ADMIN -->
     <div id="view-admin-report" class="page-view">
         <button class="btn-back-nav" onclick="switchAdminTab('menu')"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
         <h3 style="text-align: right; color: var(--dark-green); font-size: 0.9rem;">Laporan Penjualan</h3>
@@ -1154,110 +1411,85 @@
     <script>
         const SHIPPING_FEE = 5000;
         let currentUserRole = '';
+        let selectedPayment = 'COD';
 
-        // DATA PRODUK GADGET (4 BESTSELLER & 2 KOLEKSI BIASA)
         const products = [
             { 
                 id: 1, 
-                name: "iPhone 15 Pro Max", 
-                price: 21999000, 
+                name: "Nike Air Max 1", 
+                price: 2899000, 
                 isBestseller: true, 
-                image: "ip.jpg", 
-                video: "uy.mp4",
-                desc: "Smartphone flagship dengan chip A17 Pro, bodi titanium ringan, dan kamera utama 48 MP Zoom 5x.", 
-                specUrl: "https://www.apple.com/iphone-15-pro/",
+                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80", 
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: "Sepatu ikonik dengan teknologi bantalan udara yang nyaman digunakan seharian.", 
+                specUrl: "https://www.nike.com",
                 rating: 4.9, 
                 sold: 450, 
                 stok: 25,
+                colors: ["Merah", "Hitam"], 
+                sizes: ["40", "41", "42"] 
+            },
+            { 
+                id: 2, 
+                name: "iPhone 15 Pro Max", 
+                price: 21999000, 
+                isBestseller: true, 
+                image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&q=80", 
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: "Smartphone flagship dengan chip A17 Pro, bodi titanium ringan.", 
+                specUrl: "https://www.apple.com",
+                rating: 4.9, 
+                sold: 380, 
+                stok: 18,
                 colors: ["Titanium Alami", "Titanium Hitam"], 
                 sizes: ["256GB", "512GB"] 
             },
             { 
-                id: 2, 
+                id: 3, 
                 name: "Samsung Galaxy S24 Ultra", 
                 price: 19999000, 
                 isBestseller: true, 
-                image: "g.jpg", 
-                video: "u.mp4",
-                desc: "Dilengkapi Galaxy AI pintar, Stylus Pen bawaan, dan kamera super jernih 200 MP.", 
-                specUrl: "https://www.samsung.com/galaxy-s24-ultra/",
+                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&q=80", 
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: "Dilengkapi Galaxy AI pintar dan kamera super jernih 200 MP.", 
+                specUrl: "https://www.samsung.com",
                 rating: 4.9, 
-                sold: 380, 
-                stok: 18,
-                colors: ["Titanium Gray", "Titanium Black"], 
-                sizes: ["256GB", "512GB"] 
-            },
-            { 
-                id: 3, 
-                name: "MacBook Pro M3 14 Inch", 
-                price: 25999000, 
-                isBestseller: true, 
-                image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80", 
-                video: "i.mp4",
-                desc: "Laptop profesional performa tinggi dengan Chipset Apple M3 Pro, layar Liquid Retina XDR.", 
-                specUrl: "https://www.apple.com/macbook-pro/",
-                rating: 4.8, 
                 sold: 210, 
                 stok: 12,
-                colors: ["Space Black", "Silver"], 
-                sizes: ["18GB / 512GB", "36GB / 1TB"] 
-            },
-            { 
-                id: 4, 
-                name: "iPad Air M2 2024", 
-                price: 11499000, 
-                isBestseller: true, 
-                image: " tab.jpg", 
-                video: "o.mp4",
-                desc: "Tablet serbaguna dan cepat bertenaga chip M2, mendukung Apple Pencil Pro.", 
-                specUrl: "https://www.apple.com/ipad-air/",
-                rating: 4.7, 
-                sold: 190, 
-                stok: 30,
-                colors: ["Space Gray", "Starlight"], 
-                sizes: ["128GB", "256GB"] 
-            },
-            { 
-                id: 5, 
-                name: "Xiaomi 14 Ultra", 
-                price: 16999000, 
-                isBestseller: false, 
-                image: "xi.jpg", 
-                video: "h.mp4",
-                desc: "Smartphone fotografi legendaris kolaborasi Leica dengan sensor lensa 1 inci.", 
-                specUrl: "https://www.mi.com/global/product/xiaomi-14-ultra/",
-                rating: 4.8, 
-                sold: 120, 
-                stok: 15,
-                colors: ["Hitam", "Putih"], 
-                sizes: ["512GB"] 
-            },
-            { 
-                id: 6, 
-                name: "Sony WH-1000XM5 Headphones", 
-                price: 5499000, 
-                isBestseller: false, 
-                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80", 
-                video: "p.mp4",
-                desc: "Headphone Peredam Bising (Noise Cancelling) terbaik di kelasnya dengan bass mendalam.", 
-                specUrl: "https://www.sony.com/electronics/headband-headphones/wh-1000xm5",
-                rating: 4.9, 
-                sold: 310, 
-                stok: 40,
-                colors: ["Black", "Silver"], 
-                sizes: ["Standard"] 
+                colors: ["Titanium Gray", "Titanium Black"], 
+                sizes: ["256GB", "512GB"] 
             }
         ];
 
         let cart = [];
-        let myOrders = [];
+        let myOrders = JSON.parse(localStorage.getItem('azariya_orders')) || [
+            {
+                id: "AZR-468222",
+                userName: "Azana",
+                userPhone: "0856332524823",
+                productName: "Nike Air Max 1",
+                total: 2904000,
+                paymentMethod: "COD",
+                status: "Dikemas"
+            }
+        ];
+
         let uploadedImageBase64 = "";
-        let userProfile = {
-            email: "azariya@email.com",
-            username: "Azariya",
-            phone: "+62 812-3456-7890",
-            address: "Jl. Cempaka Indah No. 45"
+        let userProfile = JSON.parse(localStorage.getItem('azariya_user')) || {
+            email: "aza@gmail.com",
+            username: "Azana",
+            phone: "0856332524823",
+            address: "jl. SMK Texmaco Semarang Jawa Tengah Indonesia",
+            isLoggedIn: false
         };
+
+        // AUTO-LOGIN CHECKER ON LOAD
+        window.addEventListener('DOMContentLoaded', () => {
+            if (userProfile.isLoggedIn) {
+                document.getElementById('auth-role-selection').classList.remove('active');
+                startApp();
+            }
+        });
 
         // SELECTION ALUR LOGIN
         function selectRole(role) {
@@ -1276,7 +1508,6 @@
             document.getElementById('auth-role-selection').classList.add('active');
         }
 
-        // LOGIN ADMIN (USERNAME: aza, PASSWORD: 54321)
         function handleAdminLogin(e) {
             e.preventDefault();
             const u = document.getElementById('admin-username').value.trim();
@@ -1291,21 +1522,58 @@
             }
         }
 
-        // NAVIGASI KHUSUS ADMIN
         function switchAdminTab(screen) {
             document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
             if (screen === 'menu') {
                 document.getElementById('view-admin-menu').classList.add('active');
+                document.getElementById('admin-pending-count').innerText = myOrders.length;
             } else if (screen === 'dashboard') {
                 document.getElementById('view-admin-dashboard').classList.add('active');
                 toggleAdminView('list');
+            } else if (screen === 'transactions') {
+                document.getElementById('view-admin-transactions').classList.add('active');
+                renderAdminTransactions();
             } else if (screen === 'report') {
                 document.getElementById('view-admin-report').classList.add('active');
                 loadReport('harian');
             }
         }
 
-        // FUNGSI PERALIHAN SUBSCREEN DASHBOARD (INPUT vs VIEW PRODUK)
+        function renderAdminTransactions() {
+            const tbody = document.getElementById('admin-transactions-table-body');
+            tbody.innerHTML = '';
+            
+            if (myOrders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Belum ada pesanan masuk.</td></tr>`;
+                return;
+            }
+
+            myOrders.forEach((o, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>#${o.id}</strong></td>
+                        <td>${o.userName} (${o.userPhone})</td>
+                        <td>${formatRupiah(o.total)} (${o.paymentMethod})</td>
+                        <td><span style="background:var(--light-green); padding:3px 8px; border-radius:5px; font-weight:bold; color:var(--dark-green);">${o.status}</span></td>
+                        <td>
+                            <select onchange="updateOrderStatusByAdmin(${index}, this.value)" style="padding:5px; border-radius:5px; font-size:0.8rem;">
+                                <option value="Dikemas" ${o.status === 'Dikemas' ? 'selected' : ''}>Dikemas</option>
+                                <option value="Sedang Dikirim" ${o.status === 'Sedang Dikirim' ? 'selected' : ''}>Sedang Dikirim</option>
+                                <option value="Pesanan Selesai" ${o.status === 'Pesanan Selesai' ? 'selected' : ''}>Pesanan Selesai</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function updateOrderStatusByAdmin(index, newStatus) {
+            myOrders[index].status = newStatus;
+            localStorage.setItem('azariya_orders', JSON.stringify(myOrders));
+            alert(`Status transaksi #${myOrders[index].id} berhasil diubah menjadi: ${newStatus}`);
+            renderAdminTransactions();
+        }
+
         function toggleAdminView(viewType) {
             const listDiv = document.getElementById('admin-subview-list');
             const inputDiv = document.getElementById('admin-subview-input');
@@ -1342,7 +1610,6 @@
             });
         }
 
-        // PREVIEW FOTO DARI GALERI HP
         function previewImage(e) {
             const file = e.target.files[0];
             const previewBox = document.getElementById('upload-preview');
@@ -1359,7 +1626,6 @@
             }
         }
 
-        // TAMBAH BARANG BARU (ADMIN)
         function handleAddNewProduct(e) {
             e.preventDefault();
             const name = document.getElementById('input-new-name').value;
@@ -1385,7 +1651,6 @@
             products.push(newProd);
             alert("Berhasil menambahkan produk baru ke toko!");
 
-            // Reset form & pindah ke View Produk
             document.getElementById('input-new-name').value = '';
             document.getElementById('input-new-price').value = '';
             document.getElementById('input-new-desc').value = '';
@@ -1396,7 +1661,6 @@
             toggleAdminView('list');
         }
 
-        // FUNGSI GANTI LAPORAN PENJUALAN
         function loadReport(type) {
             const title = document.getElementById('report-title');
             const tbody = document.getElementById('report-table-body');
@@ -1431,7 +1695,6 @@
             }
         }
 
-        // ALUR LOGIN PEMBELI
         function handleAuthStep1(e) {
             e.preventDefault();
             userProfile.email = document.getElementById('input-email').value;
@@ -1450,6 +1713,10 @@
             e.preventDefault();
             userProfile.phone = document.getElementById('input-phone').value;
             userProfile.address = document.getElementById('input-address').value;
+            userProfile.isLoggedIn = true;
+
+            // SIMPAN PERMANEN DI BROWSER
+            localStorage.setItem('azariya_user', JSON.stringify(userProfile));
 
             document.getElementById('auth-step-3').classList.remove('active');
             document.getElementById('welcome-user-name').innerText = `Selamat datang, ${userProfile.username}!`;
@@ -1457,13 +1724,23 @@
         }
 
         function startApp() {
-            document.getElementById('auth-step-welcome').classList.remove('active');
+            document.querySelectorAll('.auth-overlay').forEach(el => el.classList.remove('active'));
             document.getElementById('customer-nav').style.display = 'flex';
+            
+            // UPDATE DETAIL PROFIL SESUAI DATA LOGIN USER
+            document.getElementById('profile-display-name').innerText = userProfile.username;
+            document.getElementById('profile-display-email').innerText = userProfile.email;
+            document.getElementById('profile-display-phone').innerText = userProfile.phone;
+            document.getElementById('profile-display-address').innerText = userProfile.address;
+
             renderProducts();
             switchTab('home');
         }
 
         function logoutApp() {
+            userProfile.isLoggedIn = false;
+            localStorage.setItem('azariya_user', JSON.stringify(userProfile));
+
             document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
             document.getElementById('customer-nav').style.display = 'none';
             backToRoleSelection();
@@ -1473,7 +1750,6 @@
             return "Rp " + num.toLocaleString('id-ID');
         }
 
-        // RENDER PRODUK BERANDA
         function renderProducts() {
             const bestsellerGrid = document.getElementById('bestseller-grid');
             const regularGrid = document.getElementById('regular-grid');
@@ -1504,7 +1780,6 @@
             });
         }
 
-        // DETAIL PRODUK PAGE (SLIDER FOTO + VIDEO)
         function openProductDetail(id) {
             const product = products.find(p => p.id === id);
             switchTab('product-detail');
@@ -1536,12 +1811,6 @@
                 <div style="background:var(--bg-color); padding:12px; border-radius:8px; margin: 15px 0; font-size:0.85rem;">
                     <strong>Deskripsi Produk:</strong>
                     <p style="margin-top:5px; color:var(--text-dark);">${product.desc}</p>
-                    <div style="margin-top: 10px;">
-                        🔗 <strong>Spesifikasi Lengkap:</strong> 
-                        <a href="${product.specUrl}" target="_blank" style="color: var(--primary-green); font-weight: bold; text-decoration: underline;">
-                            Klik disini untuk lihat spesifikasi resmi ${product.name}
-                        </a>
-                    </div>
                 </div>
 
                 <div class="product-actions" style="margin-top:20px;">
@@ -1551,7 +1820,6 @@
             `;
         }
 
-        // POP-UP KERANJANG (BOTTOM SHEET MODAL)
         let selectedProductForCart = null;
         let selectedColor = '';
         let selectedSize = '';
@@ -1610,8 +1878,7 @@
                 product: selectedProductForCart,
                 color: selectedColor,
                 size: selectedSize,
-                qty: currentQty,
-                selected: true
+                qty: currentQty
             });
 
             updateCartBadge();
@@ -1629,7 +1896,6 @@
             }
         }
 
-        // SWITCH TAB PEMBELI
         function switchTab(tabName) {
             document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
@@ -1644,7 +1910,6 @@
             if (tabName === 'orders') renderOrders();
         }
 
-        // KERANJANG & CHECKOUT
         function renderCart() {
             const container = document.getElementById('cart-items-container');
             if (cart.length === 0) {
@@ -1689,11 +1954,17 @@
                 product: product,
                 color: product.colors[0],
                 size: product.sizes[0],
-                qty: 1,
-                selected: true
+                qty: 1
             }];
             updateCartBadge();
             goToCheckoutFromCart();
+        }
+
+        function selectPaymentMethod(method) {
+            selectedPayment = method;
+            document.querySelectorAll('.payment-btn').forEach(btn => btn.classList.remove('active'));
+            if (method === 'COD') document.getElementById('pay-cod').classList.add('active');
+            if (method === 'QRIS') document.getElementById('pay-qris').classList.add('active');
         }
 
         function goToCheckoutFromCart() {
@@ -1703,6 +1974,10 @@
             }
             switchTab('checkout');
 
+            // POPULATE ALAMAT SESUAI USER
+            document.getElementById('checkout-user-name').innerHTML = `${userProfile.username} <span style="font-weight: normal; color: var(--text-muted);">(${userProfile.phone})</span>`;
+            document.getElementById('checkout-user-address').innerText = userProfile.address;
+
             const summaryEl = document.getElementById('checkout-summary-items');
             summaryEl.innerHTML = '';
             let total = 0;
@@ -1711,7 +1986,7 @@
                 total += item.product.price * item.qty;
                 summaryEl.innerHTML += `
                     <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:5px;">
-                        <span>${item.product.name} (x${item.qty})</span>
+                        <span>${item.product.name}</span>
                         <strong>${formatRupiah(item.product.price * item.qty)}</strong>
                     </div>
                 `;
@@ -1722,12 +1997,19 @@
 
         function processCheckout() {
             let total = cart.reduce((sum, item) => sum + (item.product.price * item.qty), 0) + SHIPPING_FEE;
-            myOrders.unshift({
-                id: "VCZ-" + Math.floor(100000 + Math.random() * 900000),
+            
+            const newOrder = {
+                id: "AZR-" + Math.floor(100000 + Math.random() * 900000),
+                userName: userProfile.username,
+                userPhone: userProfile.phone,
+                productName: cart.map(i => i.product.name).join(", "),
                 total: total,
-                status: "Dikemas",
-                itemsCount: cart.length
-            });
+                paymentMethod: selectedPayment,
+                status: "Dikemas"
+            };
+
+            myOrders.unshift(newOrder);
+            localStorage.setItem('azariya_orders', JSON.stringify(myOrders));
 
             cart = [];
             updateCartBadge();
@@ -1744,15 +2026,29 @@
             container.innerHTML = '';
             myOrders.forEach(o => {
                 container.innerHTML += `
-                    <div style="background:white; padding:15px; border-radius:10px; margin-bottom:10px; border-left:4px solid var(--primary-green);">
-                        <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                            <strong>#${o.id}</strong>
-                            <span style="background:var(--light-green); color:var(--dark-green); padding:2px 8px; border-radius:10px; font-size:0.75rem;">${o.status}</span>
+                    <div style="background:white; padding:15px; border-radius:10px; margin-bottom:12px; border-left:5px solid var(--primary-green); box-shadow:0 2px 5px rgba(0,0,0,0.03);">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <strong style="font-size:0.95rem;">#${o.id}</strong>
+                            <span style="background:var(--light-green); color:var(--dark-green); padding:3px 10px; border-radius:12px; font-size:0.75rem; font-weight:bold;">
+                                <i class="fas fa-box"></i> ${o.status}
+                            </span>
                         </div>
-                        <div style="font-size:0.85rem; font-weight:bold; color:var(--dark-green);">${formatRupiah(o.total)} (COD)</div>
+                        <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:4px;">
+                            Pemesan: <strong>${o.userName}</strong> (${o.userPhone})
+                        </div>
+                        <div style="font-size:0.85rem; color:var(--text-dark); margin-bottom:6px;">${o.productName} (Inc. Ongkir Rp 5.000)</div>
+                        <div style="font-size:0.9rem; font-weight:bold; color:var(--dark-green);">${formatRupiah(o.total)} (${o.paymentMethod})</div>
                     </div>
                 `;
             });
+        }
+
+        function clearOrderHistory() {
+            if (confirm("Apakah kamu yakin ingin menghapus semua riwayat pesanan?")) {
+                myOrders = [];
+                localStorage.setItem('azariya_orders', JSON.stringify(myOrders));
+                renderOrders();
+            }
         }
     </script>
 </body>
