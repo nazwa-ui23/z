@@ -388,22 +388,44 @@
             margin: 0 auto;
         }
 
-        .detail-img-box {
-            width: 100%;
+        /* MEDIA SLIDER DETAIL PRODUK (FOTO + VIDEO) */
+        .media-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 10px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .media-slider::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .media-slider::-webkit-scrollbar-thumb {
+            background: var(--accent-green);
+            border-radius: 4px;
+        }
+
+        .media-slide {
+            min-width: 100%;
+            max-width: 100%;
             height: 260px;
+            scroll-snap-align: start;
+            flex-shrink: 0;
             border-radius: 10px;
             overflow: hidden;
             background: #f0f0f0;
-            margin-bottom: 15px;
         }
 
-        .detail-img-box img, .detail-img-box video {
+        .media-slide img, .media-slide video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        /* BOTTOM SHEET / MODAL ADD TO CART (GAMBAR 6) */
+        /* BOTTOM SHEET / MODAL ADD TO CART */
         .cart-modal-overlay {
             display: none;
             position: fixed;
@@ -551,7 +573,7 @@
             cursor: pointer;
         }
 
-        /* ADMIN PAGES (GAMBAR 3, 4, 5) */
+        /* ADMIN PAGES */
         .admin-nav-container {
             display: flex;
             flex-direction: column;
@@ -615,6 +637,27 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             max-width: 500px;
             margin: 20px auto;
+        }
+
+        /* UPLOAD PREVIEW STYLES */
+        .upload-preview-box {
+            border: 2px dashed var(--accent-green);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 10px;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-preview-box img {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 8px;
         }
 
         /* CART PAGE */
@@ -860,7 +903,7 @@
         <div class="product-grid" id="regular-grid"></div>
     </div>
 
-    <!-- 2. DETAIL PRODUK VIEW (DENGAN VIDEO & HYPERLINK SPEC) -->
+    <!-- 2. DETAIL PRODUK VIEW -->
     <div id="view-product-detail" class="page-view">
         <button class="btn-back-nav" onclick="switchTab('home')">
             <i class="fas fa-arrow-left"></i> Kembali ke Beranda
@@ -926,10 +969,9 @@
         </div>
     </div>
 
-
     <!-- ================= HALAMAN ADMIN ================= -->
 
-    <!-- GAMBAR 3: MENU UTAMA ADMIN -->
+    <!-- GAMBAR 3 UTAMA: MENU ADMIN -->
     <div id="view-admin-menu" class="page-view">
         <h2 style="text-align: center; color: var(--dark-green); margin-top: 30px;">Silakan pilih salah satu menu</h2>
         <div class="admin-nav-container">
@@ -942,18 +984,24 @@
         </div>
     </div>
 
-    <!-- GAMBAR 4: DASHBOARD ADMIN (DAFTAR PRODUK TOKO) -->
+    <!-- DASHBOARD ADMIN (DAFTAR PRODUK ATAU FORM INPUT) -->
     <div id="view-admin-dashboard" class="page-view">
         <button class="btn-back-nav" onclick="switchAdminTab('menu')"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+        
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <h3 style="color: var(--dark-green);">Dashboard Admin</h3>
             <div style="display: flex; gap: 8px;">
-                <button class="btn" style="background-color: var(--accent-green); color: white;"><i class="fas fa-plus-circle"></i> Input Barang</button>
-                <button class="btn" style="background-color: var(--dark-green); color: white;"><i class="fas fa-boxes"></i> View Produk</button>
+                <button class="btn" id="btn-toggle-input" style="background-color: var(--accent-green); color: white;" onclick="toggleAdminView('input')">
+                    <i class="fas fa-plus-circle"></i> Input Barang
+                </button>
+                <button class="btn" id="btn-toggle-view" style="background-color: var(--dark-green); color: white;" onclick="toggleAdminView('list')">
+                    <i class="fas fa-boxes"></i> View Produk
+                </button>
             </div>
         </div>
 
-        <div class="admin-table-card">
+        <!-- TAMPILAN 1: DAFTAR SELURUH PRODUK TOKO (FOTO KE-1 KAMU) -->
+        <div id="admin-subview-list" class="admin-table-card">
             <h4 style="margin-bottom: 12px; color: var(--dark-green);"><i class="fas fa-list"></i> Daftar Seluruh Produk Toko</h4>
             <table class="admin-table">
                 <thead>
@@ -970,22 +1018,63 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- TAMPILAN 2: FORM INPUT BARANG BARU (FOTO KE-3 KAMU) -->
+        <div id="admin-subview-input" class="detail-card" style="display: none; max-width: 500px;">
+            <h3 style="text-align: center; color: var(--dark-green); margin-bottom: 20px;">
+                <i class="fas fa-box"></i> Form Input Barang Baru
+            </h3>
+            <form onsubmit="handleAddNewProduct(event)">
+                <div class="form-group">
+                    <label>Upload Foto Produk (Dari Galeri):</label>
+                    <input type="file" id="input-new-img" accept="image/*" class="form-input" onchange="previewImage(event)">
+                    <div id="upload-preview" class="upload-preview-box">
+                        Pratinjau foto dari galeri akan muncul di sini
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nama Produk Gadget:</label>
+                    <input type="text" id="input-new-name" class="form-input" placeholder="contoh: iPhone 15 Pro Max" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Harga Produk (Rp):</label>
+                    <input type="number" id="input-new-price" class="form-input" placeholder="contoh: 21999000" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Deskripsi Produk:</label>
+                    <textarea id="input-new-desc" class="form-input" rows="3" placeholder="Masukkan keunggulan dan spesifikasi gadget..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-auth" style="background-color: var(--dark-green);">
+                    <i class="fas fa-upload"></i> Tambahkan Barang ke Toko
+                </button>
+            </form>
+        </div>
     </div>
 
-    <!-- GAMBAR 5: LAPORAN PENJUALAN ADMIN -->
+    <!-- LAPORAN PENJUALAN ADMIN (FOTO KE-2 KAMU) -->
     <div id="view-admin-report" class="page-view">
         <button class="btn-back-nav" onclick="switchAdminTab('menu')"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
         <h3 style="text-align: right; color: var(--dark-green); font-size: 0.9rem;">Laporan Penjualan</h3>
         
         <p style="text-align: center; font-weight: bold; margin: 15px 0 10px; color: var(--dark-green);">Pilih Jenis Laporan Penjualan:</p>
         <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
-            <button class="btn-admin-menu" style="font-size: 0.85rem; padding: 10px 15px;"><i class="fas fa-calendar-day"></i> Laporan Harian</button>
-            <button class="btn-admin-menu" style="font-size: 0.85rem; padding: 10px 15px; background: #3c5d46;"><i class="fas fa-calendar-alt"></i> Laporan Bulanan</button>
-            <button class="btn-admin-menu" style="font-size: 0.85rem; padding: 10px 15px; background: var(--accent-green);"><i class="fas fa-chart-line"></i> Laporan Tahunan</button>
+            <button class="btn-admin-menu" id="btn-rpt-harian" style="font-size: 0.85rem; padding: 10px 15px;" onclick="loadReport('harian')">
+                <i class="fas fa-calendar-day"></i> Laporan Harian
+            </button>
+            <button class="btn-admin-menu" id="btn-rpt-bulanan" style="font-size: 0.85rem; padding: 10px 15px; background: #3c5d46;" onclick="loadReport('bulanan')">
+                <i class="fas fa-calendar-alt"></i> Laporan Bulanan
+            </button>
+            <button class="btn-admin-menu" id="btn-rpt-tahunan" style="font-size: 0.85rem; padding: 10px 15px; background: var(--accent-green);" onclick="loadReport('tahunan')">
+                <i class="fas fa-chart-line"></i> Laporan Tahunan
+            </button>
         </div>
 
         <div class="report-summary-card">
-            <h4 style="text-align: center; margin-bottom: 15px; color: var(--dark-green);">Laporan Penjualan Harian</h4>
+            <h4 id="report-title" style="text-align: center; margin-bottom: 15px; color: var(--dark-green);">Laporan Penjualan Harian</h4>
             <table class="admin-table">
                 <thead>
                     <tr>
@@ -994,7 +1083,7 @@
                         <th>Total Pendapatan</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="report-table-body">
                     <tr>
                         <td>Hari Ini (11/8/2026)</td>
                         <td>2 Transaksi</td>
@@ -1005,7 +1094,7 @@
         </div>
     </div>
 
-    <!-- GAMBAR 6: MODAL POP-UP KERANJANG (BOTTOM SHEET) -->
+    <!-- MODAL POP-UP KERANJANG -->
     <div id="cart-modal" class="cart-modal-overlay">
         <div class="cart-modal-content">
             <button class="close-modal-btn" onclick="closeCartModal()">&times;</button>
@@ -1064,11 +1153,10 @@
 
     <script>
         const SHIPPING_FEE = 5000;
-        let currentUserRole = ''; // 'pembeli' atau 'admin'
+        let currentUserRole = '';
 
         // DATA PRODUK GADGET (4 BESTSELLER & 2 KOLEKSI BIASA)
         const products = [
-            // 4 Bestseller Gadget
             { 
                 id: 1, 
                 name: "iPhone 15 Pro Max", 
@@ -1129,8 +1217,6 @@
                 colors: ["Space Gray", "Starlight"], 
                 sizes: ["128GB", "256GB"] 
             },
-
-            // 2 Produk Biasa
             { 
                 id: 5, 
                 name: "Xiaomi 14 Ultra", 
@@ -1165,6 +1251,7 @@
 
         let cart = [];
         let myOrders = [];
+        let uploadedImageBase64 = "";
         let userProfile = {
             email: "azariya@email.com",
             username: "Azariya",
@@ -1189,7 +1276,7 @@
             document.getElementById('auth-role-selection').classList.add('active');
         }
 
-        // LOGIN ADMIN VERIFIKASI (USERNAME: aza, PASSWORD: 54321)
+        // LOGIN ADMIN (USERNAME: aza, PASSWORD: 54321)
         function handleAdminLogin(e) {
             e.preventDefault();
             const u = document.getElementById('admin-username').value.trim();
@@ -1211,9 +1298,31 @@
                 document.getElementById('view-admin-menu').classList.add('active');
             } else if (screen === 'dashboard') {
                 document.getElementById('view-admin-dashboard').classList.add('active');
-                renderAdminDashboard();
+                toggleAdminView('list');
             } else if (screen === 'report') {
                 document.getElementById('view-admin-report').classList.add('active');
+                loadReport('harian');
+            }
+        }
+
+        // FUNGSI PERALIHAN SUBSCREEN DASHBOARD (INPUT vs VIEW PRODUK)
+        function toggleAdminView(viewType) {
+            const listDiv = document.getElementById('admin-subview-list');
+            const inputDiv = document.getElementById('admin-subview-input');
+            const btnInput = document.getElementById('btn-toggle-input');
+            const btnView = document.getElementById('btn-toggle-view');
+
+            if (viewType === 'input') {
+                listDiv.style.display = 'none';
+                inputDiv.style.display = 'block';
+                btnInput.style.backgroundColor = 'var(--dark-green)';
+                btnView.style.backgroundColor = 'var(--accent-green)';
+            } else {
+                inputDiv.style.display = 'none';
+                listDiv.style.display = 'block';
+                btnView.style.backgroundColor = 'var(--dark-green)';
+                btnInput.style.backgroundColor = 'var(--accent-green)';
+                renderAdminDashboard();
             }
         }
 
@@ -1231,6 +1340,95 @@
                     </tr>
                 `;
             });
+        }
+
+        // PREVIEW FOTO DARI GALERI HP
+        function previewImage(e) {
+            const file = e.target.files[0];
+            const previewBox = document.getElementById('upload-preview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    uploadedImageBase64 = event.target.result;
+                    previewBox.innerHTML = `<img src="${uploadedImageBase64}" alt="Preview">`;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                uploadedImageBase64 = "";
+                previewBox.innerHTML = "Pratinjau foto dari galeri akan muncul di sini";
+            }
+        }
+
+        // TAMBAH BARANG BARU (ADMIN)
+        function handleAddNewProduct(e) {
+            e.preventDefault();
+            const name = document.getElementById('input-new-name').value;
+            const price = parseInt(document.getElementById('input-new-price').value);
+            const desc = document.getElementById('input-new-desc').value;
+
+            const newProd = {
+                id: Date.now(),
+                name: name,
+                price: price,
+                isBestseller: false,
+                image: uploadedImageBase64 || "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80",
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: desc,
+                specUrl: "https://www.google.com",
+                rating: 5.0,
+                sold: 0,
+                stok: 20,
+                colors: ["Hitam", "Putih"],
+                sizes: ["Default"]
+            };
+
+            products.push(newProd);
+            alert("Berhasil menambahkan produk baru ke toko!");
+
+            // Reset form & pindah ke View Produk
+            document.getElementById('input-new-name').value = '';
+            document.getElementById('input-new-price').value = '';
+            document.getElementById('input-new-desc').value = '';
+            document.getElementById('input-new-img').value = '';
+            document.getElementById('upload-preview').innerHTML = "Pratinjau foto dari galeri akan muncul di sini";
+            uploadedImageBase64 = "";
+
+            toggleAdminView('list');
+        }
+
+        // FUNGSI GANTI LAPORAN PENJUALAN
+        function loadReport(type) {
+            const title = document.getElementById('report-title');
+            const tbody = document.getElementById('report-table-body');
+
+            if (type === 'harian') {
+                title.innerText = 'Laporan Penjualan Harian';
+                tbody.innerHTML = `
+                    <tr>
+                        <td>Hari Ini (11/8/2026)</td>
+                        <td>2 Transaksi</td>
+                        <td style="font-weight: bold; color: var(--dark-green);">Rp 10.056.000</td>
+                    </tr>
+                `;
+            } else if (type === 'bulanan') {
+                title.innerText = 'Laporan Penjualan Bulanan';
+                tbody.innerHTML = `
+                    <tr>
+                        <td>Agustus 2026</td>
+                        <td>45 Transaksi</td>
+                        <td style="font-weight: bold; color: var(--dark-green);">Rp 185.400.000</td>
+                    </tr>
+                `;
+            } else if (type === 'tahunan') {
+                title.innerText = 'Laporan Penjualan Tahunan';
+                tbody.innerHTML = `
+                    <tr>
+                        <td>Tahun 2026</td>
+                        <td>320 Transaksi</td>
+                        <td style="font-weight: bold; color: var(--dark-green);">Rp 1.450.000.000</td>
+                    </tr>
+                `;
+            }
         }
 
         // ALUR LOGIN PEMBELI
@@ -1306,20 +1504,29 @@
             });
         }
 
-        // DETAIL PRODUK PAGE (HYPERLINK & VIDEO INCLUDED)
+        // DETAIL PRODUK PAGE (SLIDER FOTO + VIDEO)
         function openProductDetail(id) {
             const product = products.find(p => p.id === id);
             switchTab('product-detail');
 
             const detailContainer = document.getElementById('detail-card-content');
             detailContainer.innerHTML = `
-                <div class="detail-img-box">
-                    <video controls poster="${product.image}">
-                        <source src="${product.video}" type="video/mp4">
-                        Browser tidak mendukung pemutar video.
-                    </video>
+                <div class="media-slider">
+                    <div class="media-slide">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="media-slide">
+                        <video controls poster="${product.image}">
+                            <source src="${product.video}" type="video/mp4">
+                            Browser tidak mendukung pemutar video.
+                        </video>
+                    </div>
                 </div>
-                <div style="font-size:0.75rem; color: var(--text-muted); margin-bottom: 5px;">*Geser/Putar video untuk melihat detail produk</div>
+
+                <div style="font-size:0.75rem; color: var(--text-muted); margin-bottom: 12px; text-align: center;">
+                    👈 Geser untuk melihat video produk 👉
+                </div>
+
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div style="font-size:1.3rem; font-weight:bold; color:var(--danger-red);">${formatRupiah(product.price)}</div>
                     <div style="font-size:0.8rem; color:var(--text-muted);">${product.sold} Terjual</div>
@@ -1329,7 +1536,6 @@
                 <div style="background:var(--bg-color); padding:12px; border-radius:8px; margin: 15px 0; font-size:0.85rem;">
                     <strong>Deskripsi Produk:</strong>
                     <p style="margin-top:5px; color:var(--text-dark);">${product.desc}</p>
-                    <!-- HYPERLINK EKSPLISIT -->
                     <div style="margin-top: 10px;">
                         🔗 <strong>Spesifikasi Lengkap:</strong> 
                         <a href="${product.specUrl}" target="_blank" style="color: var(--primary-green); font-weight: bold; text-decoration: underline;">
@@ -1345,7 +1551,7 @@
             `;
         }
 
-        // GAMBAR 6: POP-UP KERANJANG (BOTTOM SHEET MODAL)
+        // POP-UP KERANJANG (BOTTOM SHEET MODAL)
         let selectedProductForCart = null;
         let selectedColor = '';
         let selectedSize = '';
@@ -1362,13 +1568,11 @@
             document.getElementById('modal-stok').innerText = `Stok: ${selectedProductForCart.stok}`;
             document.getElementById('modal-qty').value = currentQty;
 
-            // Render Warna
             const colorContainer = document.getElementById('modal-color-options');
             colorContainer.innerHTML = selectedProductForCart.colors.map((c, i) => `
                 <button class="opt-btn ${i === 0 ? 'active' : ''}" onclick="selectModalColor('${c}', this)">${c}</button>
             `).join('');
 
-            // Render Ukuran/Varian
             const sizeContainer = document.getElementById('modal-size-options');
             sizeContainer.innerHTML = selectedProductForCart.sizes.map((s, i) => `
                 <button class="opt-btn ${i === 0 ? 'active' : ''}" onclick="selectModalSize('${s}', this)">${s}</button>
