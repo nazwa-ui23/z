@@ -364,7 +364,6 @@
             flex: 1;
         }
 
-        /* DETAIL PRODUK VIEW */
         .btn-back-nav {
             background: none;
             border: none;
@@ -388,7 +387,7 @@
             margin: 0 auto;
         }
 
-        /* STYLES DESAIN PROFIL BARU (FOTO 1) */
+        /* PROFIL CONTAINER */
         .profile-container {
             max-width: 450px;
             margin: 0 auto;
@@ -496,7 +495,7 @@
             color: var(--dark-green);
         }
 
-        /* STYLES CHECKOUT / KONFIRMASI PESANAN (FOTO 2) */
+        /* CHECKOUT / KONFIRMASI */
         .checkout-card-section {
             background: white;
             border-radius: 12px;
@@ -552,7 +551,7 @@
             color: var(--text-muted);
         }
 
-        /* MEDIA SLIDER DETAIL PRODUK (FOTO + VIDEO) */
+        /* MEDIA SLIDER DETAIL PRODUK */
         .media-slider {
             display: flex;
             overflow-x: auto;
@@ -589,7 +588,7 @@
             object-fit: cover;
         }
 
-        /* BOTTOM SHEET / MODAL ADD TO CART */
+        /* MODAL */
         .cart-modal-overlay {
             display: none;
             position: fixed;
@@ -823,7 +822,7 @@
             border-radius: 8px;
         }
 
-        /* CART PAGE */
+        /* CART ITEM STYLING DENGAN CHECKBOX SELEKSI */
         .cart-item {
             background: #fff;
             border-radius: 10px;
@@ -834,6 +833,13 @@
             gap: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.03);
             border: 1px solid var(--light-green);
+        }
+
+        .cart-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-green);
+            cursor: pointer;
         }
 
         .cart-item img {
@@ -956,7 +962,7 @@
         </div>
     </div>
 
-    <!-- GAMBAR 2: FORM LOGIN ADMIN KHUSUS -->
+    <!-- FORM LOGIN ADMIN -->
     <div id="auth-admin-login" class="auth-overlay">
         <div class="auth-card">
             <i class="fas fa-lock" style="font-size: 3rem; color: var(--primary-green); margin-bottom: 12px;"></i>
@@ -977,7 +983,7 @@
         </div>
     </div>
 
-    <!-- PEMBELI STEP 1: EMAIL -->
+    <!-- PEMBELI STEP 1 -->
     <div id="auth-step-1" class="auth-overlay">
         <div class="auth-card">
             <h2>Masuk Pembeli</h2>
@@ -993,7 +999,7 @@
         </div>
     </div>
 
-    <!-- PEMBELI STEP 2: USERNAME & PASSWORD -->
+    <!-- PEMBELI STEP 2 -->
     <div id="auth-step-2" class="auth-overlay">
         <div class="auth-card">
             <h2>Lengkapi Profil</h2>
@@ -1012,7 +1018,7 @@
         </div>
     </div>
 
-    <!-- PEMBELI STEP 3: PHONE & ADDRESS -->
+    <!-- PEMBELI STEP 3 -->
     <div id="auth-step-3" class="auth-overlay">
         <div class="auth-card">
             <h2>Kontak & Alamat</h2>
@@ -1066,20 +1072,20 @@
         <div class="detail-card" id="detail-card-content"></div>
     </div>
 
-    <!-- 3. KERANJANG VIEW -->
+    <!-- 3. KERANJANG VIEW (DENGAN CHECKBOX SELEKSI BARANG) -->
     <div id="view-cart" class="page-view">
         <div class="section-title"><i class="fas fa-shopping-bag"></i> Keranjang Saya</div>
         <div id="cart-items-container" style="max-width: 800px; margin: 0 auto;"></div>
         <div class="cart-footer">
             <div>
-                <span style="font-size: 0.75rem; color: var(--text-muted);">Total (Inc. Ongkir Rp 5.000):</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Total Terpilih (+Ongkir Rp 5.000):</span>
                 <div id="cart-total-price" style="font-size: 0.95rem; font-weight: bold; color: var(--dark-green);">Rp 0</div>
             </div>
             <button class="btn btn-buy" style="padding: 10px 16px; flex: initial;" onclick="goToCheckoutFromCart()">Lanjut Bayar</button>
         </div>
     </div>
 
-    <!-- 4. PROFIL VIEW (REVISI SESUAI FOTO 1) -->
+    <!-- 4. PROFIL VIEW -->
     <div id="view-profile" class="page-view">
         <div class="section-title" style="justify-content: center;"><i class="fas fa-user-circle"></i> Profil Saya</div>
         
@@ -1137,7 +1143,7 @@
         </div>
     </div>
 
-    <!-- 5. STATUS PESANAN VIEW (REVISI SESUAI FOTO 3) -->
+    <!-- 5. STATUS PESANAN VIEW (DENGAN DATA KONTRAK LENGKAP - FOTO 4 REVISI) -->
     <div id="view-orders" class="page-view">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <div class="section-title" style="margin:0;"><i class="fas fa-truck"></i> Status Pesanan</div>
@@ -1146,7 +1152,7 @@
         <div id="orders-container"></div>
     </div>
 
-    <!-- CHECKOUT VIEW (REVISI SESUAI FOTO 2) -->
+    <!-- CHECKOUT VIEW -->
     <div id="view-checkout" class="page-view">
         <div class="section-title" style="justify-content: center;"><i class="fas fa-file-invoice"></i> Konfirmasi Pesanan</div>
         <div class="detail-card" style="max-width: 500px;">
@@ -1292,7 +1298,7 @@
         </div>
     </div>
 
-    <!-- KELOLA TRANSAKSI PESANAN (FUNGSI BARU UNTUK ADMIN) -->
+    <!-- KELOLA TRANSAKSI ADMIN -->
     <div id="view-admin-transactions" class="page-view">
         <button class="btn-back-nav" onclick="switchAdminTab('menu')"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
         <h3 style="color: var(--dark-green); margin-bottom: 15px;"><i class="fas fa-tasks"></i> Update Status Pesanan Pembeli</h3>
@@ -1413,51 +1419,91 @@
         let currentUserRole = '';
         let selectedPayment = 'COD';
 
+        // KOLEKSI PRODUK LENGKAP SESUAI GAMBAR BARU FOTO 2 & 3
         const products = [
             { 
                 id: 1, 
-                name: "Nike Air Max 1", 
-                price: 2899000, 
-                isBestseller: true, 
-                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80", 
-                video: "https://www.w3schools.com/html/mov_bbb.mp4",
-                desc: "Sepatu ikonik dengan teknologi bantalan udara yang nyaman digunakan seharian.", 
-                specUrl: "https://www.nike.com",
-                rating: 4.9, 
-                sold: 450, 
-                stok: 25,
-                colors: ["Merah", "Hitam"], 
-                sizes: ["40", "41", "42"] 
-            },
-            { 
-                id: 2, 
                 name: "iPhone 15 Pro Max", 
                 price: 21999000, 
                 isBestseller: true, 
                 image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&q=80", 
                 video: "https://www.w3schools.com/html/mov_bbb.mp4",
                 desc: "Smartphone flagship dengan chip A17 Pro, bodi titanium ringan.", 
-                specUrl: "https://www.apple.com",
                 rating: 4.9, 
-                sold: 380, 
-                stok: 18,
+                sold: 450, 
+                stok: 25,
                 colors: ["Titanium Alami", "Titanium Hitam"], 
                 sizes: ["256GB", "512GB"] 
             },
             { 
-                id: 3, 
+                id: 2, 
                 name: "Samsung Galaxy S24 Ultra", 
                 price: 19999000, 
                 isBestseller: true, 
                 image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&q=80", 
                 video: "https://www.w3schools.com/html/mov_bbb.mp4",
-                desc: "Dilengkapi Galaxy AI pintar dan kamera super jernih 200 MP.", 
-                specUrl: "https://www.samsung.com",
+                desc: "Dilengkapi Galaxy AI pintar, Stylus Pen bawaan, dan kamera 200 MP.", 
                 rating: 4.9, 
-                sold: 210, 
-                stok: 12,
+                sold: 380, 
+                stok: 18,
                 colors: ["Titanium Gray", "Titanium Black"], 
                 sizes: ["256GB", "512GB"] 
+            },
+            { 
+                id: 3, 
+                name: "MacBook Pro M3 14 Inch", 
+                price: 25999000, 
+                isBestseller: true, 
+                image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80", 
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: "Laptop profesional performa tinggi dengan Chipset Apple M3 Pro.", 
+                rating: 4.8, 
+                sold: 210, 
+                stok: 12,
+                colors: ["Space Black", "Silver"], 
+                sizes: ["18GB / 512GB", "36GB / 1TB"] 
+            },
+            { 
+                id: 4, 
+                name: "iPad Air M2 2024", 
+                price: 11499000, 
+                isBestseller: true, 
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&q=80", 
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: "Tablet serbaguna dan cepat bertenaga chip M2.", 
+                rating: 4.7, 
+                sold: 190, 
+                stok: 30,
+                colors: ["Space Gray", "Starlight"], 
+                sizes: ["128GB", "256GB"] 
+            },
+            { 
+                id: 5, 
+                name: "Xiaomi 14 Ultra", 
+                price: 16999000, 
+                isBestseller: false, 
+                image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&q=80", 
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: "Smartphone fotografi legendaris kolaborasi Leica.", 
+                rating: 4.8, 
+                sold: 120, 
+                stok: 15,
+                colors: ["Hitam", "Putih"], 
+                sizes: ["512GB"] 
+            },
+            { 
+                id: 6, 
+                name: "Sony WH-1000XM5 Headphones", 
+                price: 5499000, 
+                isBestseller: false, 
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80", 
+                video: "https://www.w3schools.com/html/mov_bbb.mp4",
+                desc: "Headphone Peredam Bising (Noise Cancelling) terbaik.", 
+                rating: 4.9, 
+                sold: 310, 
+                stok: 40,
+                colors: ["Black", "Silver"], 
+                sizes: ["Standard"] 
             }
         ];
 
@@ -1467,7 +1513,9 @@
                 id: "AZR-468222",
                 userName: "Azana",
                 userPhone: "0856332524823",
-                productName: "Nike Air Max 1",
+                userEmail: "aza@gmail.com",
+                userAddress: "jl. SMK Texmaco Semarang Jawa Tengah Indonesia",
+                productName: "Nike Air Max 1 (Inc. Ongkir Rp 5.000)",
                 total: 2904000,
                 paymentMethod: "COD",
                 status: "Dikemas"
@@ -1483,7 +1531,6 @@
             isLoggedIn: false
         };
 
-        // AUTO-LOGIN CHECKER ON LOAD
         window.addEventListener('DOMContentLoaded', () => {
             if (userProfile.isLoggedIn) {
                 document.getElementById('auth-role-selection').classList.remove('active');
@@ -1491,7 +1538,6 @@
             }
         });
 
-        // SELECTION ALUR LOGIN
         function selectRole(role) {
             document.getElementById('auth-role-selection').classList.remove('active');
             currentUserRole = role;
@@ -1556,7 +1602,7 @@
                         <td>${formatRupiah(o.total)} (${o.paymentMethod})</td>
                         <td><span style="background:var(--light-green); padding:3px 8px; border-radius:5px; font-weight:bold; color:var(--dark-green);">${o.status}</span></td>
                         <td>
-                            <select onchange="updateOrderStatusByAdmin(${index}, this.value)" style="padding:5px; border-radius:5px; font-size:0.8rem;">
+                            <select onchange="verifyAndUpdateStatus(${index}, this.value)" style="padding:5px; border-radius:5px; font-size:0.8rem;">
                                 <option value="Dikemas" ${o.status === 'Dikemas' ? 'selected' : ''}>Dikemas</option>
                                 <option value="Sedang Dikirim" ${o.status === 'Sedang Dikirim' ? 'selected' : ''}>Sedang Dikirim</option>
                                 <option value="Pesanan Selesai" ${o.status === 'Pesanan Selesai' ? 'selected' : ''}>Pesanan Selesai</option>
@@ -1567,10 +1613,16 @@
             });
         }
 
-        function updateOrderStatusByAdmin(index, newStatus) {
-            myOrders[index].status = newStatus;
-            localStorage.setItem('azariya_orders', JSON.stringify(myOrders));
-            alert(`Status transaksi #${myOrders[index].id} berhasil diubah menjadi: ${newStatus}`);
+        // VERIFIKASI PASSWORD SAAT ADMIN MENGUBAH STATUS (TANPA LOGOUT)
+        function verifyAndUpdateStatus(index, newStatus) {
+            const passwordAttempt = prompt("Masukkan kata sandi Admin untuk konfirmasi perubahan status:");
+            if (passwordAttempt === "54321") {
+                myOrders[index].status = newStatus;
+                localStorage.setItem('azariya_orders', JSON.stringify(myOrders));
+                alert(`Status transaksi #${myOrders[index].id} berhasil diperbarui menjadi: ${newStatus}`);
+            } else {
+                alert("Kata sandi salah! Perubahan status dibatalkan.");
+            }
             renderAdminTransactions();
         }
 
@@ -1640,7 +1692,6 @@
                 image: uploadedImageBase64 || "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80",
                 video: "https://www.w3schools.com/html/mov_bbb.mp4",
                 desc: desc,
-                specUrl: "https://www.google.com",
                 rating: 5.0,
                 sold: 0,
                 stok: 20,
@@ -1715,7 +1766,6 @@
             userProfile.address = document.getElementById('input-address').value;
             userProfile.isLoggedIn = true;
 
-            // SIMPAN PERMANEN DI BROWSER
             localStorage.setItem('azariya_user', JSON.stringify(userProfile));
 
             document.getElementById('auth-step-3').classList.remove('active');
@@ -1727,7 +1777,6 @@
             document.querySelectorAll('.auth-overlay').forEach(el => el.classList.remove('active'));
             document.getElementById('customer-nav').style.display = 'flex';
             
-            // UPDATE DETAIL PROFIL SESUAI DATA LOGIN USER
             document.getElementById('profile-display-name').innerText = userProfile.username;
             document.getElementById('profile-display-email').innerText = userProfile.email;
             document.getElementById('profile-display-phone').innerText = userProfile.phone;
@@ -1878,7 +1927,8 @@
                 product: selectedProductForCart,
                 color: selectedColor,
                 size: selectedSize,
-                qty: currentQty
+                qty: currentQty,
+                checked: true // Status default tercentang
             });
 
             updateCartBadge();
@@ -1910,6 +1960,7 @@
             if (tabName === 'orders') renderOrders();
         }
 
+        // RENDER KERANJANG DENGAN CHECKBOX SELEKSI
         function renderCart() {
             const container = document.getElementById('cart-items-container');
             if (cart.length === 0) {
@@ -1922,9 +1973,11 @@
             let total = 0;
 
             cart.forEach((item, index) => {
-                total += item.product.price * item.qty;
+                if (item.checked) total += item.product.price * item.qty;
+
                 container.innerHTML += `
                     <div class="cart-item">
+                        <input type="checkbox" class="cart-checkbox" ${item.checked ? 'checked' : ''} onchange="toggleCartItemChecked(${index})">
                         <img src="${item.product.image}" alt="">
                         <div class="cart-item-details">
                             <div class="cart-item-title">${item.product.name}</div>
@@ -1938,7 +1991,12 @@
                 `;
             });
 
-            document.getElementById('cart-total-price').innerText = formatRupiah(total + SHIPPING_FEE);
+            document.getElementById('cart-total-price').innerText = total > 0 ? formatRupiah(total + SHIPPING_FEE) : "Rp 0";
+        }
+
+        function toggleCartItemChecked(index) {
+            cart[index].checked = !cart[index].checked;
+            renderCart();
         }
 
         function removeFromCart(index) {
@@ -1954,7 +2012,8 @@
                 product: product,
                 color: product.colors[0],
                 size: product.sizes[0],
-                qty: 1
+                qty: 1,
+                checked: true
             }];
             updateCartBadge();
             goToCheckoutFromCart();
@@ -1968,13 +2027,13 @@
         }
 
         function goToCheckoutFromCart() {
-            if (cart.length === 0) {
-                alert("Keranjang kamu kosong!");
+            const selectedItems = cart.filter(item => item.checked);
+            if (selectedItems.length === 0) {
+                alert("Silakan pilih minimal 1 produk yang ingin dibayar dengan mencentang kotak seleksi!");
                 return;
             }
             switchTab('checkout');
 
-            // POPULATE ALAMAT SESUAI USER
             document.getElementById('checkout-user-name').innerHTML = `${userProfile.username} <span style="font-weight: normal; color: var(--text-muted);">(${userProfile.phone})</span>`;
             document.getElementById('checkout-user-address').innerText = userProfile.address;
 
@@ -1982,11 +2041,11 @@
             summaryEl.innerHTML = '';
             let total = 0;
 
-            cart.forEach(item => {
+            selectedItems.forEach(item => {
                 total += item.product.price * item.qty;
                 summaryEl.innerHTML += `
                     <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:5px;">
-                        <span>${item.product.name}</span>
+                        <span>${item.product.name} (x${item.qty})</span>
                         <strong>${formatRupiah(item.product.price * item.qty)}</strong>
                     </div>
                 `;
@@ -1996,13 +2055,16 @@
         }
 
         function processCheckout() {
-            let total = cart.reduce((sum, item) => sum + (item.product.price * item.qty), 0) + SHIPPING_FEE;
+            const selectedItems = cart.filter(item => item.checked);
+            let total = selectedItems.reduce((sum, item) => sum + (item.product.price * item.qty), 0) + SHIPPING_FEE;
             
             const newOrder = {
                 id: "AZR-" + Math.floor(100000 + Math.random() * 900000),
                 userName: userProfile.username,
                 userPhone: userProfile.phone,
-                productName: cart.map(i => i.product.name).join(", "),
+                userEmail: userProfile.email,
+                userAddress: userProfile.address,
+                productName: selectedItems.map(i => i.product.name).join(", ") + " (Inc. Ongkir Rp 5.000)",
                 total: total,
                 paymentMethod: selectedPayment,
                 status: "Dikemas"
@@ -2011,11 +2073,13 @@
             myOrders.unshift(newOrder);
             localStorage.setItem('azariya_orders', JSON.stringify(myOrders));
 
-            cart = [];
+            // Hapus produk yang sudah di-checkout dari keranjang
+            cart = cart.filter(item => !item.checked);
             updateCartBadge();
             switchTab('thankyou');
         }
 
+        // RENDER DETAIL TAMPILAN STATUS PESANAN PEMBELI (REVISI FOTO 4)
         function renderOrders() {
             const container = document.getElementById('orders-container');
             if (myOrders.length === 0) {
@@ -2033,10 +2097,16 @@
                                 <i class="fas fa-box"></i> ${o.status}
                             </span>
                         </div>
-                        <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:4px;">
-                            Pemesan: <strong>${o.userName}</strong> (${o.userPhone})
+                        <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:2px;">
+                            Pemesanan Oleh: <strong>${o.userName}</strong> (${o.userPhone})
                         </div>
-                        <div style="font-size:0.85rem; color:var(--text-dark); margin-bottom:6px;">${o.productName} (Inc. Ongkir Rp 5.000)</div>
+                        <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:2px;">
+                            Email: <span>${o.userEmail || userProfile.email}</span>
+                        </div>
+                        <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+                            Alamat Pengiriman: <span>${o.userAddress || userProfile.address}</span>
+                        </div>
+                        <div style="font-size:0.85rem; color:var(--text-dark); margin-bottom:6px;">${o.productName}</div>
                         <div style="font-size:0.9rem; font-weight:bold; color:var(--dark-green);">${formatRupiah(o.total)} (${o.paymentMethod})</div>
                     </div>
                 `;
