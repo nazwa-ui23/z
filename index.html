@@ -453,29 +453,6 @@
             border: 1px solid var(--accent-green);
         }
 
-        .profile-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            background: #f8faf8;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            text-align: center;
-            border: 1px solid var(--light-green);
-        }
-
-        .stat-val {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: var(--dark-green);
-        }
-
-        .stat-lbl {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-
         .profile-info-item {
             background: #f8faf8;
             padding: 12px 15px;
@@ -802,6 +779,25 @@
             object-fit: cover;
         }
 
+        .btn-action-edit {
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 4px;
+        }
+
+        .btn-action-delete {
+            background: var(--danger-red);
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
         .report-summary-card {
             background: white;
             border-radius: 12px;
@@ -1094,7 +1090,7 @@
         </div>
     </div>
 
-    <!-- 4. PROFIL VIEW -->
+    <!-- 4. PROFIL VIEW (REVISI 1: PUSHBUTTON STATISTIK DIHAPUS) -->
     <div id="view-profile" class="page-view">
         <div class="section-title" style="justify-content: center;"><i class="fas fa-user-circle"></i> Profil Saya</div>
         
@@ -1105,21 +1101,6 @@
                 </div>
                 <div class="profile-name" id="profile-display-name">Azana</div>
                 <div class="profile-badge"><i class="fas fa-crown" style="color: #f1c40f;"></i> VIP Member</div>
-            </div>
-
-            <div class="profile-stats">
-                <div>
-                    <div class="stat-val" id="profile-stat-buy">5</div>
-                    <div class="stat-lbl">Beli</div>
-                </div>
-                <div>
-                    <div class="stat-val">Aktif</div>
-                    <div class="stat-lbl">Status COD</div>
-                </div>
-                <div>
-                    <div class="stat-val">100%</div>
-                    <div class="stat-lbl">Terverifikasi</div>
-                </div>
             </div>
 
             <div class="profile-info-item">
@@ -1240,7 +1221,7 @@
         </div>
     </div>
 
-    <!-- DASHBOARD ADMIN -->
+    <!-- DASHBOARD ADMIN (REVISI 2: TABEL DENGAN FITUR EDIT & HAPUS) -->
     <div id="view-admin-dashboard" class="page-view">
         <button class="btn-back-nav" onclick="switchAdminTab('menu')"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
         
@@ -1265,7 +1246,7 @@
                         <th>Nama Produk</th>
                         <th>Harga</th>
                         <th>Terjual</th>
-                        <th>Rating</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="admin-product-table-body"></tbody>
@@ -1433,8 +1414,8 @@
         let currentUserRole = '';
         let selectedPayment = 'COD';
 
-        // SETIAP PRODUK DIBAWAHKAN HYPERLINK SPESIFIKASI RESMI
-        const products = [
+        // DATA PRODUK
+        let products = [
             { 
                 id: 1, 
                 name: "iPhone 15 Pro Max", 
@@ -1665,20 +1646,48 @@
             }
         }
 
+        // REVISI 2: TABEL DENGAN FITUR EDIT DAN HAPUS PRODUK
         function renderAdminDashboard() {
             const tbody = document.getElementById('admin-product-table-body');
             tbody.innerHTML = '';
-            products.forEach(p => {
+            products.forEach((p, index) => {
                 tbody.innerHTML += `
                     <tr>
                         <td><img src="${p.image}" alt=""></td>
                         <td><strong>${p.name}</strong></td>
                         <td>${formatRupiah(p.price)}</td>
                         <td>${p.sold}</td>
-                        <td>⭐ ${p.rating}</td>
+                        <td>
+                            <button class="btn-action-edit" onclick="editProductAdmin(${index})" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="btn-action-delete" onclick="deleteProductAdmin(${index})" title="Hapus"><i class="fas fa-trash"></i></button>
+                        </td>
                     </tr>
                 `;
             });
+        }
+
+        function editProductAdmin(index) {
+            const product = products[index];
+            const newName = prompt("Edit Nama Produk:", product.name);
+            if (newName === null || newName.trim() === "") return;
+
+            const newPrice = prompt("Edit Harga Produk (Rp):", product.price);
+            if (newPrice === null || isNaN(newPrice) || newPrice.trim() === "") return;
+
+            products[index].name = newName.trim();
+            products[index].price = parseInt(newPrice);
+            alert("Produk berhasil diperbarui!");
+            renderAdminDashboard();
+            renderProducts();
+        }
+
+        function deleteProductAdmin(index) {
+            if (confirm(`Apakah Anda yakin ingin menghapus produk "${products[index].name}"?`)) {
+                products.splice(index, 1);
+                alert("Produk berhasil dihapus!");
+                renderAdminDashboard();
+                renderProducts();
+            }
         }
 
         function previewImage(e) {
@@ -1821,7 +1830,6 @@
             return "Rp " + num.toLocaleString('id-ID');
         }
 
-        // TAMPILKAN HYPERLINK DI KARTU PRODUK BERANDA
         function renderProducts() {
             const bestsellerGrid = document.getElementById('bestseller-grid');
             const regularGrid = document.getElementById('regular-grid');
@@ -1855,7 +1863,6 @@
             });
         }
 
-        // TAMPILKAN HYPERLINK DENGAN JELAS DI HALAMAN DETAIL PRODUK
         function openProductDetail(id) {
             const product = products.find(p => p.id === id);
             switchTab('product-detail');
