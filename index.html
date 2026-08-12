@@ -332,6 +332,15 @@
             font-weight: normal;
         }
 
+        .product-link {
+            font-size: 0.7rem;
+            color: var(--primary-green);
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
         .product-actions {
             display: flex;
             gap: 5px;
@@ -1143,7 +1152,7 @@
         </div>
     </div>
 
-    <!-- 5. STATUS PESANAN VIEW (DENGAN DATA KONTRAK LENGKAP - FOTO 4 REVISI) -->
+    <!-- 5. STATUS PESANAN VIEW -->
     <div id="view-orders" class="page-view">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <div class="section-title" style="margin:0;"><i class="fas fa-truck"></i> Status Pesanan</div>
@@ -1291,6 +1300,11 @@
                     <textarea id="input-new-desc" class="form-input" rows="3" placeholder="Masukkan keunggulan dan spesifikasi gadget..." required></textarea>
                 </div>
 
+                <div class="form-group">
+                    <label>Link Hyperlink Spesifikasi Produk:</label>
+                    <input type="url" id="input-new-link" class="form-input" placeholder="https://www.apple.com/iphone-15-pro/" required>
+                </div>
+
                 <button type="submit" class="btn-auth" style="background-color: var(--dark-green);">
                     <i class="fas fa-upload"></i> Tambahkan Barang ke Toko
                 </button>
@@ -1419,7 +1433,7 @@
         let currentUserRole = '';
         let selectedPayment = 'COD';
 
-        // KOLEKSI PRODUK LENGKAP SESUAI GAMBAR BARU FOTO 2 & 3
+        // SETIAP PRODUK DIBAWAHKAN HYPERLINK SPESIFIKASI RESMI
         const products = [
             { 
                 id: 1, 
@@ -1429,6 +1443,7 @@
                 image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&q=80", 
                 video: "https://www.w3schools.com/html/mov_bbb.mp4",
                 desc: "Smartphone flagship dengan chip A17 Pro, bodi titanium ringan.", 
+                link: "https://www.apple.com/iphone-15-pro/",
                 rating: 4.9, 
                 sold: 450, 
                 stok: 25,
@@ -1443,6 +1458,7 @@
                 image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&q=80", 
                 video: "https://www.w3schools.com/html/mov_bbb.mp4",
                 desc: "Dilengkapi Galaxy AI pintar, Stylus Pen bawaan, dan kamera 200 MP.", 
+                link: "https://www.samsung.com/id/smartphones/galaxy-s24-ultra/",
                 rating: 4.9, 
                 sold: 380, 
                 stok: 18,
@@ -1457,6 +1473,7 @@
                 image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80", 
                 video: "https://www.w3schools.com/html/mov_bbb.mp4",
                 desc: "Laptop profesional performa tinggi dengan Chipset Apple M3 Pro.", 
+                link: "https://www.apple.com/id/macbook-pro/",
                 rating: 4.8, 
                 sold: 210, 
                 stok: 12,
@@ -1471,6 +1488,7 @@
                 image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&q=80", 
                 video: "https://www.w3schools.com/html/mov_bbb.mp4",
                 desc: "Tablet serbaguna dan cepat bertenaga chip M2.", 
+                link: "https://www.apple.com/id/ipad-air/",
                 rating: 4.7, 
                 sold: 190, 
                 stok: 30,
@@ -1485,6 +1503,7 @@
                 image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&q=80", 
                 video: "https://www.w3schools.com/html/mov_bbb.mp4",
                 desc: "Smartphone fotografi legendaris kolaborasi Leica.", 
+                link: "https://www.mi.co.id/id/product/xiaomi-14-ultra/",
                 rating: 4.8, 
                 sold: 120, 
                 stok: 15,
@@ -1499,6 +1518,7 @@
                 image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80", 
                 video: "https://www.w3schools.com/html/mov_bbb.mp4",
                 desc: "Headphone Peredam Bising (Noise Cancelling) terbaik.", 
+                link: "https://www.sony.co.id/id/electronics/headband-headphones/wh-1000xm5",
                 rating: 4.9, 
                 sold: 310, 
                 stok: 40,
@@ -1613,7 +1633,6 @@
             });
         }
 
-        // VERIFIKASI PASSWORD SAAT ADMIN MENGUBAH STATUS (TANPA LOGOUT)
         function verifyAndUpdateStatus(index, newStatus) {
             const passwordAttempt = prompt("Masukkan kata sandi Admin untuk konfirmasi perubahan status:");
             if (passwordAttempt === "54321") {
@@ -1683,6 +1702,7 @@
             const name = document.getElementById('input-new-name').value;
             const price = parseInt(document.getElementById('input-new-price').value);
             const desc = document.getElementById('input-new-desc').value;
+            const link = document.getElementById('input-new-link').value;
 
             const newProd = {
                 id: Date.now(),
@@ -1692,6 +1712,7 @@
                 image: uploadedImageBase64 || "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80",
                 video: "https://www.w3schools.com/html/mov_bbb.mp4",
                 desc: desc,
+                link: link,
                 rating: 5.0,
                 sold: 0,
                 stok: 20,
@@ -1705,6 +1726,7 @@
             document.getElementById('input-new-name').value = '';
             document.getElementById('input-new-price').value = '';
             document.getElementById('input-new-desc').value = '';
+            document.getElementById('input-new-link').value = '';
             document.getElementById('input-new-img').value = '';
             document.getElementById('upload-preview').innerHTML = "Pratinjau foto dari galeri akan muncul di sini";
             uploadedImageBase64 = "";
@@ -1799,6 +1821,7 @@
             return "Rp " + num.toLocaleString('id-ID');
         }
 
+        // TAMPILKAN HYPERLINK DI KARTU PRODUK BERANDA
         function renderProducts() {
             const bestsellerGrid = document.getElementById('bestseller-grid');
             const regularGrid = document.getElementById('regular-grid');
@@ -1815,6 +1838,9 @@
                             <div class="product-title">${p.name}</div>
                             <div class="product-price">${formatRupiah(p.price)}</div>
                             <div class="product-description">${p.desc}</div>
+                            <a href="${p.link}" target="_blank" rel="noopener noreferrer" class="product-link" onclick="event.stopPropagation();">
+                                <i class="fas fa-external-link-alt"></i> Spesifikasi Resmi
+                            </a>
                             <div class="product-meta">⭐ ${p.rating} <span>| terjual ${p.sold}</span></div>
                             <div class="product-actions" onclick="event.stopPropagation();">
                                 <button class="btn btn-cart" onclick="openAddToCartModal(${p.id})"><i class="fas fa-cart-plus"></i></button>
@@ -1829,6 +1855,7 @@
             });
         }
 
+        // TAMPILKAN HYPERLINK DENGAN JELAS DI HALAMAN DETAIL PRODUK
         function openProductDetail(id) {
             const product = products.find(p => p.id === id);
             switchTab('product-detail');
@@ -1860,6 +1887,12 @@
                 <div style="background:var(--bg-color); padding:12px; border-radius:8px; margin: 15px 0; font-size:0.85rem;">
                     <strong>Deskripsi Produk:</strong>
                     <p style="margin-top:5px; color:var(--text-dark);">${product.desc}</p>
+                    <div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed #ccc;">
+                        🔗 <strong>Spesifikasi Resmi:</strong> 
+                        <a href="${product.link}" target="_blank" rel="noopener noreferrer" style="color: var(--primary-green); font-weight: bold; text-decoration: underline;">
+                            Lihat Website Resmi ${product.name} <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="product-actions" style="margin-top:20px;">
@@ -1928,7 +1961,7 @@
                 color: selectedColor,
                 size: selectedSize,
                 qty: currentQty,
-                checked: true // Status default tercentang
+                checked: true
             });
 
             updateCartBadge();
@@ -1960,7 +1993,6 @@
             if (tabName === 'orders') renderOrders();
         }
 
-        // RENDER KERANJANG DENGAN CHECKBOX SELEKSI
         function renderCart() {
             const container = document.getElementById('cart-items-container');
             if (cart.length === 0) {
@@ -2073,13 +2105,11 @@
             myOrders.unshift(newOrder);
             localStorage.setItem('azariya_orders', JSON.stringify(myOrders));
 
-            // Hapus produk yang sudah di-checkout dari keranjang
             cart = cart.filter(item => !item.checked);
             updateCartBadge();
             switchTab('thankyou');
         }
 
-        // RENDER DETAIL TAMPILAN STATUS PESANAN PEMBELI (REVISI FOTO 4)
         function renderOrders() {
             const container = document.getElementById('orders-container');
             if (myOrders.length === 0) {
@@ -2123,4 +2153,3 @@
     </script>
 </body>
 </html>
- 
